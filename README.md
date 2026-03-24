@@ -1,40 +1,37 @@
-This is a Kotlin Multiplatform project targeting Android, Desktop (JVM).
+# 칸반 보드 생성 - 컴포넌트
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+## 1단계 - 칸반 보드 생성(상품 목록) 구현할 기능 목록
 
-### Build and Run Android Application
+### 새 태스크 생성 모달 구현
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+- [x] 제목을 필수로 입력 받는다.
+    - [x] 제목을 입력하지 않으면 에러 문구를 출력한다.
+- [x] 설명을 입력 받는다.
+- [x] 태그를 쉼표로 구분하여 입력 받는다.
+    - [x] 형식에 맞지 않으면 에러 문구를 출력한다. 
+        - 쉼표로 시작하거나 끝나지 않는다.
+        - 쉼표가 연달아 나올 수 없다.
+    - [x] 쉼표 사이의 공백은 무시된다.
+    - [x] 태그가 5자 이내가 아니라면 에러 문구를 출력한다.
+    - [x] 태그가 5개를 초과하면 에러 문구를 출력한다.
+- [x] 태스크 상태로 3가지(To Do, In Progress, Done)를 가진다.
+    - [x] 첫 번째 요소가 기본으로 선택된다.
+    - [x] 한 항목만 선택 가능하다.
+- [x] 담당자를 필수로 입력 받는다. 
+    - [x] 첫 번째 요소가 기본으로 선택된다.
+    - [x] 한 항목만 선택 가능하다.
+- [x] 모든 필드가 유효한 값이면 생성 버튼을 누를 수 있다.
+- [x] 피그마에 맞게 디자인을 적용한다.
 
-### Build and Run Desktop (JVM) Application
+## 2단계 - 칸반 보드 생성(보드) 구현할 기능 목록
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+### 새 태스크 생성 버튼에 모달 연결
+- [x] 새 태스크 생성 버튼을 클릭하면 새 태스크 생성 모달이 노출된다.
+- [x] 새 태스크 생성 모달을 닫을 수 있다.
+- [x] 유효한 입력 후 생성 버튼을 클릭하면 태스크가 생성된다.
+  - [x] 상태별 테스크 목록에 생성된 테스크가 나타난다.
+  - [x] 새로운 태스크가 추가되면 Snackbar를 노출한다.
 
----
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+### 각 상태별 태스크 개수를 트래킹
+- [x] 상태(To-Do, In Progress, Done)별 태스크 개수를 계산한다.
+- [x] 전체 할 일 중 완료된 일의 비율을 계산한다.
