@@ -85,11 +85,11 @@ fun CreateTaskCardModal(
         ) {
             onConfirmation(
                 Task(
-                    taskInputState.title,
-                    taskInputState.content,
-                    splitByComma(taskInputState.tags),
-                    taskInputState.selectedState,
-                    taskInputState.selectedAuthor,
+                    title = taskInputState.title,
+                    content = taskInputState.content,
+                    tags = splitByComma(taskInputState.tags),
+                    taskState = taskInputState.selectedState,
+                    author = taskInputState.selectedAuthor,
                 ),
             )
         }

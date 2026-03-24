@@ -27,6 +27,7 @@ class BoardTest {
                 tasks = Tasks(emptyList()),
                 onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
+                onTaskStateChange = { _, _ -> },
             )
         }
 
@@ -45,6 +46,7 @@ class BoardTest {
                 tasks = Tasks(emptyList()),
                 onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
+                onTaskStateChange = { _, _ -> },
             )
         }
 
@@ -66,6 +68,7 @@ class BoardTest {
                 tasks = tasks,
                 onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
                 authors = listOf("다이노", "페임스"),
+                onTaskStateChange = { _, _ -> },
             )
         }
 
@@ -88,6 +91,7 @@ class BoardTest {
                 tasks = tasks,
                 onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
                 authors = listOf("다이노", "페임스"),
+                onTaskStateChange = { _, _ -> },
             )
         }
 
@@ -110,6 +114,7 @@ class BoardTest {
                 tasks = tasks,
                 onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
                 authors = listOf("다이노", "페임스"),
+                onTaskStateChange = { _, _ -> },
             )
         }
 

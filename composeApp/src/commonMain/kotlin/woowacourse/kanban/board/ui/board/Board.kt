@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.components.BoardHeader
 import woowacourse.kanban.board.ui.board.components.CreateTaskModalDialog
@@ -32,7 +33,13 @@ import woowacourse.kanban.board.ui.theme.OutlineVariant
 import woowacourse.kanban.board.ui.theme.Primary
 
 @Composable
-fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, modifier: Modifier = Modifier) {
+fun Board(
+    tasks: Tasks,
+    onTaskCreated: (Task) -> Unit,
+    authors: List<String>,
+    modifier: Modifier = Modifier,
+    onTaskStateChange: (Int, TaskState) -> Unit,
+) {
     var openDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -56,6 +63,16 @@ fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, mo
 
                 KanbanBoardContent(
                     tasks,
+                    onTaskStateChange = { idx, targetStatus ->
+                        onTaskStateChange(idx, targetStatus)
+                        scope.launch {
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(
+                                message = "태스크가 이동되었습니다.",
+                                withDismissAction = true,
+                            )
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Primary),
@@ -72,6 +89,7 @@ fun Board(tasks: Tasks, onTaskCreated: (Task) -> Unit, authors: List<String>, mo
                         onTaskCreated(it)
                         openDialog = false
                         scope.launch {
+                            snackbarHostState.currentSnackbarData?.dismiss()
                             snackbarHostState.showSnackbar(
                                 message = "새로운 태스크가 추가되었습니다.",
                                 withDismissAction = true,
@@ -95,5 +113,6 @@ fun BoardPreview() {
         onTaskCreated = {},
         authors = listOf("다이노", "페임스"),
         modifier = Modifier.size(width = 1295.dp, height = 909.dp),
+        onTaskStateChange = { _, _ -> },
     )
 }

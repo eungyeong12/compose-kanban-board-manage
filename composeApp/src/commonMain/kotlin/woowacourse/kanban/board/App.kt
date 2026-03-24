@@ -21,6 +21,7 @@ fun App() {
     Board(
         tasks = tasks,
         onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
+        onTaskStateChange = { idx, targetStatus -> tasks = tasks.fixStatus(idx, targetStatus) },
         authors = authors,
         modifier = Modifier.size(width = 1295.dp, height = 909.dp),
     )

@@ -3,6 +3,7 @@ package woowacourse.kanban.board.ui.taskcard
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,9 +20,17 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,13 +46,41 @@ import woowacourse.kanban.board.ui.theme.TextPrimary
 import woowacourse.kanban.board.ui.theme.TextSecondary
 
 @Composable
-fun TaskCard(task: Task) {
+fun TaskCard(
+    task: Task,
+    modifier: Modifier = Modifier,
+    onDragStart: () -> Unit = {},
+    onDragChange: (Offset) -> Unit,
+    onDragEnd: () -> Unit = {},
+    onDragCancel: () -> Unit = {},
+) {
+    var cardWindowPosition by remember { mutableStateOf(Offset.Zero) }
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
         ),
         border = BorderStroke(1.dp, OutlineVariant),
-        modifier = Modifier.width(286.dp),
+        modifier = Modifier
+            .width(286.dp)
+            .onGloballyPositioned { cardWindowPosition = it.positionInWindow() }
+            .pointerInput(Unit) {
+                detectDragGestures(
+                    onDragStart = {
+                        onDragStart()
+                    },
+                    onDrag = { change, dragAmount ->
+                        change.consume()
+                        onDragChange(cardWindowPosition + change.position)
+                    },
+                    onDragEnd = {
+                        onDragEnd()
+                    },
+                    onDragCancel = {
+                        onDragCancel()
+                    },
+                )
+            },
     ) {
         Column(
             modifier = Modifier.padding(17.dp),
@@ -139,5 +176,7 @@ private fun TaskCardPreview() {
             tags = listOf("컴포넌트", "성능"),
             author = "다이노",
         ),
+        onDragChange = {},
+        modifier = Modifier.padding(16.dp),
     )
 }
