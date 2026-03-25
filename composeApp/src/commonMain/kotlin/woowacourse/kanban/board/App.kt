@@ -18,11 +18,10 @@ fun App() {
     val authors = listOf("다이노", "페임스")
     var tasks by remember { mutableStateOf(Tasks(emptyList())) }
 
-    Board(
-        tasks = tasks,
-        onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
-        onTaskStateChange = { idx, targetStatus -> tasks = tasks.fixStatus(idx, targetStatus) },
-        authors = authors,
-        modifier = Modifier.size(width = 1295.dp, height = 909.dp),
+
+    ProjectScreen(
+        projects = projects,
+        onProjectChange = { project, tasks -> projects[projects.indexOf(project)].tasks = tasks },
+        modifier = Modifier.fillMaxSize(),
     )
 }
