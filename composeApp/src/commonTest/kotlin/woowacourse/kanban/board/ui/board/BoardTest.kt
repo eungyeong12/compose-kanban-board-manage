@@ -15,11 +15,11 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
+import kotlin.test.Test
 import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
-import kotlin.test.Test
 
 @OptIn(ExperimentalTestApi::class)
 class BoardTest {
@@ -159,9 +159,15 @@ class BoardTest {
             )
 
         setContent {
-            var tasks by remember { mutableStateOf(Tasks(listOf(
-                Task(title = "title", taskState = TaskState.TO_DO)
-            ))) }
+            var tasks by remember {
+                mutableStateOf(
+                    Tasks(
+                        listOf(
+                            Task(title = "title", taskState = TaskState.TO_DO),
+                        ),
+                    ),
+                )
+            }
 
             Board(
                 projectName = "Compose Desktop 칸반 보드",

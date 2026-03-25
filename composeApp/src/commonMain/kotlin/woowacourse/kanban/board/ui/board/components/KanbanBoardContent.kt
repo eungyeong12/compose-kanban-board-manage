@@ -46,7 +46,6 @@ import woowacourse.kanban.board.ui.theme.InProgressTitle
 import woowacourse.kanban.board.ui.theme.ToDoBorder
 import woowacourse.kanban.board.ui.theme.ToDoContent
 import woowacourse.kanban.board.ui.theme.ToDoTitle
-import kotlin.enums.enumEntries
 
 @Composable
 fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (Int, TaskState) -> Unit, modifier: Modifier = Modifier) {
@@ -89,7 +88,7 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (Int, TaskState) -> Unit
                     currentDragPosition = null
                     draggedTask = null
                 },
-                modifier = Modifier.testTag(taskState.name)
+                modifier = Modifier.testTag(taskState.name),
             )
         }
     }
@@ -142,8 +141,7 @@ private fun StateTasks(
             onTaskDragCancel = onTaskDragCancel,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
-            ,
+                .padding(16.dp),
         )
     }
 }
