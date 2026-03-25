@@ -36,6 +36,7 @@ fun ProjectScreen(projects: List<Project>, onProjectChange: (Project, Tasks) -> 
         )
 
         Board(
+            projectName = selectedProject.name,
             tasks = selectedTasks,
             onTaskCreated = {
                 selectedTasks = selectedTasks.copy(tasks = selectedTasks.copy(tasks = selectedTasks.addTask(it)).tasks)
@@ -59,7 +60,7 @@ private fun ProjectScreenPreview() {
             Project("Compose1", Tasks(emptyList())),
             Project("Compose2", Tasks(emptyList())),
         ),
-        modifier = TODO(),
+        modifier = Modifier,
         onProjectChange = { _, _ -> },
     )
 }

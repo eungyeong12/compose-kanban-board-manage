@@ -33,7 +33,7 @@ import woowacourse.kanban.board.ui.theme.OutlineVariant
 import woowacourse.kanban.board.ui.theme.TextPrimary
 
 @Composable
-fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun BoardHeader(projectName: String, tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.padding(16.dp),
     ) {
@@ -43,7 +43,7 @@ fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column {
-                BoardTitle()
+                BoardTitle(projectName)
                 Spacer(modifier = Modifier.height(6.dp))
                 TaskCompletedRate(
                     tasks.completedRate(),
@@ -62,9 +62,9 @@ fun BoardHeader(tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier
 }
 
 @Composable
-private fun BoardTitle(modifier: Modifier = Modifier) {
+private fun BoardTitle(projectName: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Compose Desktop 칸반 보드",
+        text = projectName,
         modifier = modifier,
         fontWeight = FontWeight.W500,
         fontSize = 24.sp,
@@ -126,6 +126,7 @@ private fun ProjectProgress(doneCount: Int, totalCount: Int, modifier: Modifier 
 @Composable
 private fun BoardHeaderPreview() {
     BoardHeader(
+        projectName = "Compose Desktop 칸반 보드",
         tasks = Tasks(
             listOf(
                 Task(title = "title1", taskState = TaskState.DONE),

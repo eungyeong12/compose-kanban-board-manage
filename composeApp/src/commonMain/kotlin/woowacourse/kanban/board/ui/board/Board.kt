@@ -34,6 +34,7 @@ import woowacourse.kanban.board.ui.theme.Primary
 
 @Composable
 fun Board(
+    projectName: String,
     tasks: Tasks,
     onTaskCreated: (Task) -> Unit,
     authors: List<String>,
@@ -52,6 +53,7 @@ fun Board(
         ) {
             Column {
                 BoardHeader(
+                    projectName = projectName,
                     tasks = tasks,
                     onClick = { openDialog = true },
                     modifier = Modifier
@@ -109,6 +111,7 @@ fun Board(
 @Composable
 fun BoardPreview() {
     Board(
+        projectName = "Compose Desktop 칸반보드",
         tasks = Tasks(emptyList()),
         onTaskCreated = {},
         authors = listOf("다이노", "페임스"),
