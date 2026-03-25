@@ -1,6 +1,8 @@
 package woowacourse.kanban.board.ui.board
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
@@ -40,8 +42,8 @@ class ProjectScreenTest {
             )
         }
 
-        onNodeWithText("Compose1", useUnmergedTree = true).assertExists()
-        onNodeWithText("Compose2", useUnmergedTree = true).assertExists()
+        onNode(hasText("Compose1") and hasClickAction()).assertExists()
+        onNode(hasText("Compose2") and hasClickAction()).assertExists()
     }
 
     @Test
