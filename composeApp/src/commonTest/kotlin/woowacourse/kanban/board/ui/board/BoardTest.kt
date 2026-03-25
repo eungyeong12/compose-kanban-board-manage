@@ -9,12 +9,17 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
-import kotlin.test.Test
+import woowacourse.kanban.board.domain.Project
+import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
+import kotlin.test.Test
 
 @OptIn(ExperimentalTestApi::class)
 class BoardTest {
@@ -24,6 +29,7 @@ class BoardTest {
         // given
         setContent {
             Board(
+                projectName = "Compose Desktop 칸반 보드",
                 tasks = Tasks(emptyList()),
                 onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
@@ -43,6 +49,7 @@ class BoardTest {
         // given
         setContent {
             Board(
+                projectName = "Compose Desktop 칸반 보드",
                 tasks = Tasks(emptyList()),
                 onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
@@ -65,6 +72,7 @@ class BoardTest {
             var tasks by remember { mutableStateOf(Tasks(emptyList())) }
 
             Board(
+                projectName = "Compose Desktop 칸반 보드",
                 tasks = tasks,
                 onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
                 authors = listOf("다이노", "페임스"),
@@ -88,6 +96,7 @@ class BoardTest {
             var tasks by remember { mutableStateOf(Tasks(emptyList())) }
 
             Board(
+                projectName = "Compose Desktop 칸반 보드",
                 tasks = tasks,
                 onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
                 authors = listOf("다이노", "페임스"),
@@ -111,6 +120,7 @@ class BoardTest {
             var tasks by remember { mutableStateOf(Tasks(emptyList())) }
 
             Board(
+                projectName = "Compose Desktop 칸반 보드",
                 tasks = tasks,
                 onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
                 authors = listOf("다이노", "페임스"),
@@ -127,5 +137,55 @@ class BoardTest {
 
         // then
         onNodeWithText("완료율: 100% (1/1)").assertExists()
+    }
+
+    @Test
+    fun `태스크의 상태를 변경하면 Snackbar를 노출한다`() = runComposeUiTest {
+        // given
+        val projects =
+            listOf(
+                Project(
+                    name = "Compose1",
+                    tasks = Tasks(emptyList()),
+                ),
+                Project(
+                    name = "Compose2",
+                    tasks = Tasks(emptyList()),
+                ),
+                Project(
+                    name = "Compose3너무너무길다란이름",
+                    tasks = Tasks(emptyList()),
+                ),
+            )
+
+        setContent {
+            var tasks by remember { mutableStateOf(Tasks(listOf(
+                Task(title = "title", taskState = TaskState.TO_DO)
+            ))) }
+
+            Board(
+                projectName = "Compose Desktop 칸반 보드",
+                tasks = tasks,
+                onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
+                authors = listOf("다이노", "페임스"),
+                onTaskStateChange = { idx, targetStatus ->
+                    val newTasks = tasks.fixStatus(idx, targetStatus)
+                    tasks = tasks.copy(tasks = newTasks)
+                },
+            )
+        }
+
+        val targetColumnBounds = onNodeWithTag(TaskState.IN_PROGRESS.name).fetchSemanticsNode().boundsInRoot
+
+        // when
+        onNodeWithText("title").performTouchInput {
+            down(center)
+            advanceEventTime(1000)
+            moveTo(targetColumnBounds.center)
+            up()
+        }
+
+        // then
+        onNodeWithText("태스크가 이동되었습니다.").assertIsDisplayed()
     }
 }

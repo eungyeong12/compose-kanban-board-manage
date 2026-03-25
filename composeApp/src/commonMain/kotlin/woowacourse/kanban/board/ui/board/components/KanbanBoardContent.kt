@@ -29,6 +29,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,6 +46,7 @@ import woowacourse.kanban.board.ui.theme.InProgressTitle
 import woowacourse.kanban.board.ui.theme.ToDoBorder
 import woowacourse.kanban.board.ui.theme.ToDoContent
 import woowacourse.kanban.board.ui.theme.ToDoTitle
+import kotlin.enums.enumEntries
 
 @Composable
 fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (Int, TaskState) -> Unit, modifier: Modifier = Modifier) {
@@ -87,6 +89,7 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (Int, TaskState) -> Unit
                     currentDragPosition = null
                     draggedTask = null
                 },
+                modifier = Modifier.testTag(taskState.name)
             )
         }
     }
@@ -139,7 +142,8 @@ private fun StateTasks(
             onTaskDragCancel = onTaskDragCancel,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+            ,
         )
     }
 }
