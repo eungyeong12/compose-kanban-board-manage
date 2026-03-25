@@ -6,8 +6,14 @@ data class Tasks(val tasks: List<Task>) {
     fun countByState(taskState: TaskState): Int = tasks.count { it.taskState == taskState }
     fun completedRate(): Int = if (tasks.isEmpty()) 0 else (countByState(TaskState.DONE).toDouble() / tasks.size * 100).toInt()
     fun getTasksByState(taskState: TaskState): List<Task> = tasks.filter { it.taskState == taskState }
-    fun fixStatus(idx: Int, targetStatus: TaskState): Tasks {
+
+    fun fixStatus(idx: Int, targetStatus: TaskState): List<Task> {
         _tasks[idx] = _tasks[idx].copy(taskState = targetStatus)
-        return Tasks(_tasks.toList())
+        return _tasks.toList()
+    }
+
+    fun addTask(task: Task): List<Task> {
+        _tasks.add(task)
+        return _tasks.toList()
     }
 }

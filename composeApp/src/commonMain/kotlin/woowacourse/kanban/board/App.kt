@@ -1,23 +1,31 @@
 package woowacourse.kanban.board
 
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Tasks
-import woowacourse.kanban.board.ui.board.Board
+import woowacourse.kanban.board.ui.board.ProjectScreen
 
 @Preview(showBackground = true)
 @Composable
 fun App() {
-    val authors = listOf("다이노", "페임스")
-    var tasks by remember { mutableStateOf(Tasks(emptyList())) }
-
+    val projects =
+        listOf(
+            Project(
+                name = "Compose1",
+                tasks = Tasks(emptyList()),
+            ),
+            Project(
+                name = "Compose2",
+                tasks = Tasks(emptyList()),
+            ),
+            Project(
+                name = "Compose3너무너무길다란이름",
+                tasks = Tasks(emptyList()),
+            ),
+        )
 
     ProjectScreen(
         projects = projects,
