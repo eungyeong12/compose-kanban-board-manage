@@ -109,7 +109,7 @@ fun Board(
 
 @Preview(showBackground = true)
 @Composable
-fun BoardPreview() {
+private fun BoardPreview() {
     Board(
         projectName = "Compose Desktop 칸반보드",
         tasks = Tasks(emptyList()),

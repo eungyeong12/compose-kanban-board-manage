@@ -11,6 +11,6 @@ value class Tag(val value: String) {
     }
 
     companion object {
-        const val TAG_MAX_LENGTH = 5
+        private const val TAG_MAX_LENGTH = 5
     }
 }

@@ -11,6 +11,6 @@ value class Tags(val tags: List<String>) {
     }
 
     companion object {
-        const val TAGS_MAX_SIZE = 5
+        private const val TAGS_MAX_SIZE = 5
     }
 }
