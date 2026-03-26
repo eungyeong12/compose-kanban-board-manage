@@ -61,7 +61,7 @@ fun TaskCard(
             containerColor = Color.White,
         ),
         border = BorderStroke(1.dp, OutlineVariant),
-        modifier = Modifier
+        modifier = modifier
             .width(286.dp)
             .onGloballyPositioned { cardWindowPosition = it.positionInWindow() }
             .pointerInput(Unit) {
