@@ -16,22 +16,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlin.collections.forEach
 import woowacourse.kanban.board.domain.Project
-import woowacourse.kanban.board.domain.Tasks
 
 @Composable
-fun Sidebar(projects: List<Project>, selectedProject: Project, onProjectChange: (Project) -> Unit, modifier: Modifier = Modifier) {
+fun Sidebar(projects: List<Project>, selectedProject: Project?, modifier: Modifier = Modifier, onProjectChange: (Project) -> Unit) {
     Column(
         modifier = modifier,
     ) {
         SidebarHeader(modifier.padding(24.dp))
         HorizontalDivider()
-        NavigationBar(
-            projects = projects,
-            selectedProject = selectedProject,
-            onProjectChange = onProjectChange,
-        )
+        if (projects.isNotEmpty() && selectedProject != null) {
+            NavigationBar(
+                projects = projects,
+                selectedProject = selectedProject,
+                onProjectChange = onProjectChange,
+            )
+        }
     }
 }
 
@@ -95,9 +95,10 @@ private fun BoardSelectButton(onClick: () -> Unit, project: Project, backgroundC
 @Composable
 private fun SidebarPreview() {
     Sidebar(
-        modifier = Modifier,
-        selectedProject = Project("Compose1", Tasks(emptyList())),
+        projects = listOf(
+            Project(name = "Compose Desktop 칸반보드"),
+        ),
+        selectedProject = Project(name = "Compose Desktop 칸반보드"),
         onProjectChange = {},
-        projects = listOf(Project("Compose1", tasks = Tasks(emptyList())), Project("Compose2", tasks = Tasks(emptyList()))),
     )
 }

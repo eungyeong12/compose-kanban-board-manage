@@ -8,6 +8,9 @@ data class Task(
     val taskState: TaskState = TaskState.TO_DO,
     val author: String = "다이노",
 ) {
+
+    fun changeTaskState(taskState: TaskState): Task = copy(taskState = taskState)
+
     companion object {
         private var idCounter = 0
     }

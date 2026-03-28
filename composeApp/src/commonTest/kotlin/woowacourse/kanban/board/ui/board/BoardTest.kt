@@ -1,9 +1,6 @@
 package woowacourse.kanban.board.ui.board
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
@@ -15,22 +12,29 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
+import java.util.UUID
 import kotlin.test.Test
 import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
+import woowacourse.kanban.board.ui.board.state.ProjectsStateHolder
 
 @OptIn(ExperimentalTestApi::class)
 class BoardTest {
+    val projects = listOf(
+        Project(name = "Compose1", tasks = Tasks(listOf(Task(title = "title")))),
+        Project(name = "Compose2"),
+        Project(name = "Compose3너무너무길다란이름"),
+    )
 
     @Test
     fun `새 태스크 생성 버튼을 클릭하면 새 태스크 생성 모달이 노출된다`() = runComposeUiTest {
         // given
         setContent {
             Board(
-                projectName = "Compose Desktop 칸반 보드",
-                tasks = Tasks(emptyList()),
+                projectName = projects.first().name,
+                tasks = projects.first().tasks,
                 onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
@@ -49,8 +53,8 @@ class BoardTest {
         // given
         setContent {
             Board(
-                projectName = "Compose Desktop 칸반 보드",
-                tasks = Tasks(emptyList()),
+                projectName = projects.first().name,
+                tasks = projects.first().tasks,
                 onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
@@ -69,36 +73,36 @@ class BoardTest {
     fun `유효한 입력 후 생성 버튼을 클릭하면 새 태스크가 노출된다`() = runComposeUiTest {
         // given
         setContent {
-            var tasks by remember { mutableStateOf(Tasks(emptyList())) }
+            val stateHolder = remember { ProjectsStateHolder(projects) }
+            val uiState = stateHolder.uiState
+            val selectedProject = uiState.selectedProject
 
             Board(
-                projectName = "Compose Desktop 칸반 보드",
-                tasks = tasks,
-                onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
-                authors = listOf("다이노", "페임스"),
+                projectName = selectedProject?.name ?: "",
+                tasks = selectedProject?.tasks ?: Tasks(emptyList()),
+                onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
                 onTaskStateChange = { _, _ -> },
+                authors = listOf("다이노", "페임스"),
             )
         }
 
         // when
         onNodeWithText("새 태스크 생성").performClick()
-        onNodeWithText("태스크 제목을 입력하세요").performTextInput("title")
+        onNodeWithText("태스크 제목을 입력하세요").performTextInput("title2")
         onNodeWithText("생성").performClick()
 
         // then
-        onNodeWithText("title", useUnmergedTree = true).assertExists()
+        onNodeWithText("title2").assertExists()
     }
 
     @Test
     fun `새로운 태스크가 추가되면 Snackbar를 노출한다`() = runComposeUiTest {
         // given
         setContent {
-            var tasks by remember { mutableStateOf(Tasks(emptyList())) }
-
             Board(
-                projectName = "Compose Desktop 칸반 보드",
-                tasks = tasks,
-                onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
+                projectName = projects.first().name,
+                tasks = projects.first().tasks,
+                onTaskCreated = {},
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
@@ -114,70 +118,47 @@ class BoardTest {
     }
 
     @Test
-    fun `DONE 상태의 태스크를 추가하면 완료율이 100으로 변경된다`() = runComposeUiTest {
+    fun `DONE 상태의 태스크를 추가하면 완료율이 50으로 변경된다`() = runComposeUiTest {
         // given
         setContent {
-            var tasks by remember { mutableStateOf(Tasks(emptyList())) }
+            val stateHolder = remember { ProjectsStateHolder(projects) }
+            val uiState = stateHolder.uiState
+            val selectedProject = uiState.selectedProject
 
             Board(
-                projectName = "Compose Desktop 칸반 보드",
-                tasks = tasks,
-                onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
-                authors = listOf("다이노", "페임스"),
+                projectName = selectedProject?.name ?: "",
+                tasks = selectedProject?.tasks ?: Tasks(emptyList()),
+                onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
                 onTaskStateChange = { _, _ -> },
+                authors = listOf("다이노", "페임스"),
             )
         }
 
         // when
-        onNodeWithText("완료율: 0% (0/0)").assertExists()
+        onNodeWithText("완료율: 0% (0/1)").assertExists()
         onNodeWithText("새 태스크 생성").performClick()
-        onNodeWithText("태스크 제목을 입력하세요").performTextInput("title")
+        onNodeWithText("태스크 제목을 입력하세요").performTextInput("title2")
         onNode(hasText("Done") and hasClickAction()).performClick()
         onNodeWithText("생성").performClick()
 
         // then
-        onNodeWithText("완료율: 100% (1/1)").assertExists()
+        onNodeWithText("완료율: 50% (1/2)").assertExists()
     }
 
     @Test
     fun `태스크의 상태를 변경하면 Snackbar를 노출한다`() = runComposeUiTest {
         // given
-        val projects =
-            listOf(
-                Project(
-                    name = "Compose1",
-                    tasks = Tasks(emptyList()),
-                ),
-                Project(
-                    name = "Compose2",
-                    tasks = Tasks(emptyList()),
-                ),
-                Project(
-                    name = "Compose3너무너무길다란이름",
-                    tasks = Tasks(emptyList()),
-                ),
-            )
-
         setContent {
-            var tasks by remember {
-                mutableStateOf(
-                    Tasks(
-                        listOf(
-                            Task(title = "title", taskState = TaskState.TO_DO),
-                        ),
-                    ),
-                )
-            }
+            val stateHolder = remember { ProjectsStateHolder(projects) }
 
             Board(
-                projectName = "Compose Desktop 칸반 보드",
-                tasks = tasks,
-                onTaskCreated = { tasks = tasks.copy(tasks = tasks.tasks + it) },
-                authors = listOf("다이노", "페임스"),
+                projectName = projects.first().name,
+                tasks = projects.first().tasks,
+                onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
                 onTaskStateChange = { idx, targetStatus ->
-                    val newTasks = tasks.fixStatus(idx, targetStatus)
-                    tasks = tasks.copy(tasks = newTasks)
+                    stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
                 },
+                authors = listOf("다이노", "페임스"),
             )
         }
 

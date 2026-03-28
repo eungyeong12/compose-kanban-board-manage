@@ -24,16 +24,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.kanban.board.domain.Task
-import woowacourse.kanban.board.domain.TaskState
-import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.theme.CompletedRate
 import woowacourse.kanban.board.ui.theme.OnSurface
 import woowacourse.kanban.board.ui.theme.OutlineVariant
 import woowacourse.kanban.board.ui.theme.TextPrimary
 
 @Composable
-fun BoardHeader(projectName: String, tasks: Tasks, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun BoardHeader(
+    projectName: String,
+    completedRate: Int,
+    doneCount: Int,
+    totalCount: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier.padding(16.dp),
     ) {
@@ -46,17 +50,17 @@ fun BoardHeader(projectName: String, tasks: Tasks, onClick: () -> Unit, modifier
                 BoardTitle(projectName)
                 Spacer(modifier = Modifier.height(6.dp))
                 TaskCompletedRate(
-                    tasks.completedRate(),
-                    tasks.countByState(TaskState.DONE),
-                    tasks.totalCount,
+                    completedRate,
+                    doneCount,
+                    totalCount,
                 )
             }
             CreateTaskButton(onClick = onClick)
         }
         Spacer(modifier = Modifier.height(16.dp))
         ProjectProgress(
-            doneCount = tasks.countByState(TaskState.DONE),
-            totalCount = tasks.totalCount,
+            doneCount = doneCount,
+            totalCount = totalCount,
         )
     }
 }
@@ -126,15 +130,10 @@ private fun ProjectProgress(doneCount: Int, totalCount: Int, modifier: Modifier 
 @Composable
 private fun BoardHeaderPreview() {
     BoardHeader(
-        projectName = "Compose Desktop 칸반 보드",
-        tasks = Tasks(
-            listOf(
-                Task(title = "title1", taskState = TaskState.DONE),
-                Task(title = "title2", taskState = TaskState.DONE),
-                Task(title = "title3", taskState = TaskState.TO_DO),
-                Task(title = "title4", taskState = TaskState.IN_PROGRESS),
-            ),
-        ),
+        projectName = "Compose Desktop 칸반보드",
+        completedRate = 100,
+        doneCount = 1,
+        totalCount = 1,
         onClick = {},
     )
 }

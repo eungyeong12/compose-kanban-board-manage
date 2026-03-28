@@ -1,19 +1,33 @@
 package woowacourse.kanban.board.domain
 
 data class Tasks(val tasks: List<Task>) {
-    private val _tasks = tasks.toMutableList()
-    val totalCount: Int = tasks.size
-    fun countByState(taskState: TaskState): Int = tasks.count { it.taskState == taskState }
-    fun completedRate(): Int = if (tasks.isEmpty()) 0 else (countByState(TaskState.DONE).toDouble() / tasks.size * 100).toInt()
-    fun getTasksByState(taskState: TaskState): List<Task> = tasks.filter { it.taskState == taskState }
+    val totalCount: Int
+        get() = tasks.size
 
-    fun fixStatus(idx: Int, targetStatus: TaskState): List<Task> {
-        _tasks[idx] = _tasks[idx].copy(taskState = targetStatus)
-        return _tasks.toList()
+    val completedRate: Int
+        get() = if (tasks.isEmpty()) 0 else (countByState(TaskState.DONE).toDouble() / tasks.size * 100).toInt()
+
+    fun addTask(task: Task): Tasks {
+        return copy(tasks = tasks + task)
     }
 
-    fun addTask(task: Task): List<Task> {
-        _tasks.add(task)
-        return _tasks.toList()
+    fun changeTaskState(taskId: Int, taskState: TaskState): Tasks {
+        return copy(
+            tasks = tasks.mapIndexed { index, task ->
+                if (index == taskId) {
+                    task.changeTaskState(taskState)
+                } else {
+                    task
+                }
+            },
+        )
+    }
+
+    fun countByState(taskState: TaskState): Int {
+        return tasks.count { it.taskState == taskState }
+    }
+
+    fun getTasksByState(taskState: TaskState): List<Task> {
+        return tasks.filter { it.taskState == taskState }
     }
 }

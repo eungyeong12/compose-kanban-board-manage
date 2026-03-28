@@ -54,7 +54,7 @@ class TasksTest {
         )
 
         // when
-        val completedRate = tasks.completedRate()
+        val completedRate = tasks.completedRate
 
         // then
         assertThat(completedRate).isEqualTo(50)
@@ -66,7 +66,7 @@ class TasksTest {
         val tasks = Tasks(emptyList())
 
         // when
-        val completedRate = tasks.completedRate()
+        val completedRate = tasks.completedRate
 
         // then
         assertThat(completedRate).isEqualTo(0)

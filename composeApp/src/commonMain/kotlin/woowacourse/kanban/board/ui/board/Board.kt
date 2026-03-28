@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -21,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
@@ -38,8 +36,8 @@ fun Board(
     tasks: Tasks,
     onTaskCreated: (Task) -> Unit,
     authors: List<String>,
-    modifier: Modifier = Modifier,
     onTaskStateChange: (Int, TaskState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var openDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -54,7 +52,9 @@ fun Board(
             Column {
                 BoardHeader(
                     projectName = projectName,
-                    tasks = tasks,
+                    completedRate = tasks.completedRate,
+                    doneCount = tasks.countByState(TaskState.DONE),
+                    totalCount = tasks.totalCount,
                     onClick = { openDialog = true },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -64,7 +64,7 @@ fun Board(
                 HorizontalDivider(color = OutlineVariant)
 
                 KanbanBoardContent(
-                    tasks,
+                    tasks = tasks,
                     onTaskStateChange = { idx, targetStatus ->
                         onTaskStateChange(idx, targetStatus)
                         scope.launch {
@@ -115,7 +115,6 @@ private fun BoardPreview() {
         tasks = Tasks(emptyList()),
         onTaskCreated = {},
         authors = listOf("다이노", "페임스"),
-        modifier = Modifier.size(width = 1295.dp, height = 909.dp),
         onTaskStateChange = { _, _ -> },
     )
 }

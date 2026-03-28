@@ -101,13 +101,13 @@ private fun StateTasks(
     titleColor: Color,
     contentColor: Color,
     borderColor: Color,
+    modifier: Modifier = Modifier,
     getIsDropTarget: () -> Boolean = { false },
     onBoundsChanged: (Rect) -> Unit = {},
     onTaskDragStart: (Task) -> Unit = {},
     onTaskDragChange: (Offset) -> Unit = {},
     onTaskDragEnd: () -> Unit = {},
     onTaskDragCancel: () -> Unit = {},
-    modifier: Modifier = Modifier,
 ) {
     val isDropTarget by remember { derivedStateOf { getIsDropTarget() } }
     val lastBoundsHolder = remember { mutableStateOf<Rect?>(null) }
