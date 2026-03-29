@@ -39,6 +39,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.profile_image
 import org.jetbrains.compose.resources.painterResource
 import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.ui.theme.OutlineVariant
 import woowacourse.kanban.board.ui.theme.TagBackground
 import woowacourse.kanban.board.ui.theme.TaskCardContent
@@ -174,6 +175,7 @@ private fun TaskCardPreview() {
             title = "LazyColumn 컴포넌트 구현",
             content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
             tags = listOf("컴포넌트", "성능"),
+            taskState = TaskState.TO_DO,
             author = "다이노",
         ),
         onDragChange = {},

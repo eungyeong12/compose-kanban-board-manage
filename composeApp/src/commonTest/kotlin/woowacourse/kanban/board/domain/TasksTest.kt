@@ -10,11 +10,11 @@ class TasksTest {
         // given
         val tasks = Tasks(
             listOf(
-                Task(title = "title1", taskState = TaskState.TO_DO),
-                Task(title = "title2", taskState = TaskState.TO_DO),
-                Task(title = "title3", taskState = TaskState.IN_PROGRESS),
-                Task(title = "title4", taskState = TaskState.DONE),
-                Task(title = "title5", taskState = TaskState.DONE),
+                Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노"),
+                Task(title = "title2", taskState = TaskState.TO_DO, author = "다이노"),
+                Task(title = "title3", taskState = TaskState.IN_PROGRESS, author = "다이노"),
+                Task(title = "title4", taskState = TaskState.DONE, author = "다이노"),
+                Task(title = "title5", taskState = TaskState.DONE, author = "다이노"),
             ),
         )
 
@@ -46,10 +46,10 @@ class TasksTest {
         // given
         val tasks = Tasks(
             listOf(
-                Task(title = "title1", taskState = TaskState.TO_DO),
-                Task(title = "title2", taskState = TaskState.TO_DO),
-                Task(title = "title4", taskState = TaskState.DONE),
-                Task(title = "title5", taskState = TaskState.DONE),
+                Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노"),
+                Task(title = "title2", taskState = TaskState.TO_DO, author = "다이노"),
+                Task(title = "title4", taskState = TaskState.DONE, author = "다이노"),
+                Task(title = "title5", taskState = TaskState.DONE, author = "다이노"),
             ),
         )
 
@@ -77,10 +77,10 @@ class TasksTest {
         // given
         val tasks = Tasks(
             listOf(
-                Task(title = "title1", taskState = TaskState.TO_DO),
-                Task(title = "title2", taskState = TaskState.TO_DO),
-                Task(title = "title4", taskState = TaskState.DONE),
-                Task(title = "title5", taskState = TaskState.DONE),
+                Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노"),
+                Task(title = "title2", taskState = TaskState.TO_DO, author = "다이노"),
+                Task(title = "title4", taskState = TaskState.DONE, author = "다이노"),
+                Task(title = "title5", taskState = TaskState.DONE, author = "다이노"),
             ),
         )
 

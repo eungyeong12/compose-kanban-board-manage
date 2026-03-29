@@ -12,6 +12,7 @@ import androidx.compose.ui.test.runComposeUiTest
 import org.junit.Test
 import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.state.ProjectsStateHolder
 
@@ -19,7 +20,18 @@ import woowacourse.kanban.board.ui.board.state.ProjectsStateHolder
 class ProjectScreenTest {
     val projects = listOf(
         Project(name = "Compose1"),
-        Project(name = "Compose2", tasks = Tasks(listOf(Task(title = "test_title")))),
+        Project(
+            name = "Compose2",
+            tasks = Tasks(
+                listOf(
+                    Task(
+                        title = "test_title",
+                        taskState = TaskState.TO_DO,
+                        author = "다이노",
+                    ),
+                ),
+            ),
+        ),
         Project(name = "Compose3너무너무길다란이름"),
     )
 

@@ -23,7 +23,18 @@ import woowacourse.kanban.board.ui.board.state.ProjectsStateHolder
 @OptIn(ExperimentalTestApi::class)
 class BoardTest {
     val projects = listOf(
-        Project(name = "Compose1", tasks = Tasks(listOf(Task(title = "title")))),
+        Project(
+            name = "Compose1",
+            tasks = Tasks(
+                listOf(
+                    Task(
+                        title = "title",
+                        taskState = TaskState.TO_DO,
+                        author = "다이노",
+                    ),
+                ),
+            ),
+        ),
         Project(name = "Compose2"),
         Project(name = "Compose3너무너무길다란이름"),
     )

@@ -7,8 +7,8 @@ data class Task(
     val title: String,
     val content: String = "",
     val tags: List<String> = emptyList(),
-    val taskState: TaskState = TaskState.TO_DO,
-    val author: String = "다이노",
+    val taskState: TaskState,
+    val author: String,
 ) {
     fun changeTaskState(taskState: TaskState): Task = copy(taskState = taskState)
 }
