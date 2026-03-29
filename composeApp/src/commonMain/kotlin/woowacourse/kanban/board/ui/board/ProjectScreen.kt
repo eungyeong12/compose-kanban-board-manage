@@ -19,7 +19,7 @@ fun ProjectScreen(
     stateHolder: ProjectsStateHolder,
     onProjectChange: (UUID) -> Unit,
     onTaskCreated: (UUID, Task) -> Unit,
-    onTaskStateChange: (UUID, Int, TaskState) -> Unit,
+    onTaskStateChange: (UUID, UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val uiState = stateHolder.uiState
@@ -42,8 +42,8 @@ fun ProjectScreen(
                 projectName = selectedProject.name,
                 tasks = selectedProject.tasks,
                 onTaskCreated = { onTaskCreated(selectedProject.id, it) },
-                onTaskStateChange = { taskIdx, targetState ->
-                    onTaskStateChange(selectedProject.id, taskIdx, targetState)
+                onTaskStateChange = { taskId, targetState ->
+                    onTaskStateChange(selectedProject.id, taskId, targetState)
                 },
                 authors = authors,
                 modifier = Modifier.size(width = 1295.dp, height = 909.dp),

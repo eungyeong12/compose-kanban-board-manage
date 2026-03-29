@@ -7,7 +7,7 @@ data class Project(val id: UUID = UUID.randomUUID(), val name: String, val tasks
         return copy(tasks = tasks.addTask(task))
     }
 
-    fun changeTaskState(taskId: Int, taskState: TaskState): Project {
+    fun changeTaskState(taskId: UUID, taskState: TaskState): Project {
         return copy(tasks = tasks.changeTaskState(taskId, taskState))
     }
 }

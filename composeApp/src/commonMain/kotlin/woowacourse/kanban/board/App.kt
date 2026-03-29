@@ -24,8 +24,8 @@ fun App() {
         stateHolder = stateHolder,
         onProjectChange = { projectId -> stateHolder.selectProject(projectId) },
         onTaskCreated = { projectId, task -> stateHolder.addTask(projectId, task) },
-        onTaskStateChange = { projectId, taskIdx, taskState ->
-            stateHolder.changeTaskState(projectId, taskIdx, taskState)
+        onTaskStateChange = { projectId, taskId, taskState ->
+            stateHolder.changeTaskState(projectId, taskId, taskState)
         },
         modifier = Modifier.fillMaxSize(),
     )

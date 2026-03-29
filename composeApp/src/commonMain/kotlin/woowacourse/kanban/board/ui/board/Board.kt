@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import java.util.UUID
 import kotlinx.coroutines.launch
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
@@ -36,7 +37,7 @@ fun Board(
     tasks: Tasks,
     onTaskCreated: (Task) -> Unit,
     authors: List<String>,
-    onTaskStateChange: (Int, TaskState) -> Unit,
+    onTaskStateChange: (UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var openDialog by remember { mutableStateOf(false) }
@@ -65,8 +66,8 @@ fun Board(
 
                 KanbanBoardContent(
                     tasks = tasks,
-                    onTaskStateChange = { idx, targetStatus ->
-                        onTaskStateChange(idx, targetStatus)
+                    onTaskStateChange = { id, targetStatus ->
+                        onTaskStateChange(id, targetStatus)
                         scope.launch {
                             snackbarHostState.currentSnackbarData?.dismiss()
                             snackbarHostState.showSnackbar(

@@ -1,5 +1,7 @@
 package woowacourse.kanban.board.domain
 
+import java.util.UUID
+
 data class Tasks(val tasks: List<Task>) {
     val totalCount: Int
         get() = tasks.size
@@ -11,13 +13,13 @@ data class Tasks(val tasks: List<Task>) {
         return copy(tasks = tasks + task)
     }
 
-    fun changeTaskState(taskId: Int, taskState: TaskState): Tasks {
+    fun changeTaskState(taskId: UUID, taskState: TaskState): Tasks {
         return copy(
-            tasks = tasks.mapIndexed { index, task ->
-                if (index == taskId) {
-                    task.changeTaskState(taskState)
+            tasks = tasks.map {
+                if (it.id == taskId) {
+                    it.changeTaskState(taskState)
                 } else {
-                    task
+                    it
                 }
             },
         )

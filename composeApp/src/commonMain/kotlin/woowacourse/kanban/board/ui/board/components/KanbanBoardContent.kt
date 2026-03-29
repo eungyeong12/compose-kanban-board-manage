@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.util.UUID
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
@@ -48,7 +49,7 @@ import woowacourse.kanban.board.ui.theme.ToDoContent
 import woowacourse.kanban.board.ui.theme.ToDoTitle
 
 @Composable
-fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (Int, TaskState) -> Unit, modifier: Modifier = Modifier) {
+fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Unit, modifier: Modifier = Modifier) {
     var draggedTask by remember { mutableStateOf<Task?>(null) }
     var currentDragPosition by remember { mutableStateOf<Offset?>(null) }
     val columnBounds = remember { mutableStateMapOf<TaskState, Rect>() }
@@ -76,8 +77,7 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (Int, TaskState) -> Unit
 
                     draggedTask?.let { task ->
                         if (targetStatus != null && task.taskState != targetStatus) {
-                            val idx = tasks.tasks.indexOfFirst { it.id == task.id }
-                            if (idx != -1) onTaskStateChange(idx, targetStatus)
+                            onTaskStateChange(task.id, targetStatus)
                         }
                     }
 

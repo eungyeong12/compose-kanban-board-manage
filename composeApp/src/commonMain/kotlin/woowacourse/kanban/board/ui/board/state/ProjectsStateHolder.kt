@@ -34,7 +34,7 @@ class ProjectsStateHolder(val projects: List<Project> = emptyList()) {
         )
     }
 
-    fun changeTaskState(projectId: UUID, taskId: Int, taskState: TaskState) {
+    fun changeTaskState(projectId: UUID, taskId: UUID, taskState: TaskState) {
         _uiState = _uiState.copy(
             projects = _uiState.projects.map {
                 if (it.id == projectId) {
