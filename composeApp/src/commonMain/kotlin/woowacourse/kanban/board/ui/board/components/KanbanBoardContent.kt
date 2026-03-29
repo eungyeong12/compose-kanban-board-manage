@@ -135,7 +135,7 @@ private fun StateTasks(
         StateTasksTitle(titleColor, taskState, tasks)
         TaskCards(
             tasks.getTasksByState(taskState),
-            onTaskDragStart = { onTaskDragStart(it) },
+            onTaskDragStart = onTaskDragStart,
             onTaskDragChange = onTaskDragChange,
             onTaskDragEnd = onTaskDragEnd,
             onTaskDragCancel = onTaskDragCancel,
