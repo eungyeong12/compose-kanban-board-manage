@@ -65,6 +65,7 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Uni
                 taskState.titleColor(),
                 taskState.contentColor(),
                 taskState.borderColor(),
+                modifier = Modifier.testTag(taskState.name),
                 getIsDropTarget = {
                     currentDragPosition?.let { columnBounds[taskState]?.contains(it) } ?: false
                 },
@@ -88,7 +89,6 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Uni
                     currentDragPosition = null
                     draggedTask = null
                 },
-                modifier = Modifier.testTag(taskState.name),
             )
         }
     }
