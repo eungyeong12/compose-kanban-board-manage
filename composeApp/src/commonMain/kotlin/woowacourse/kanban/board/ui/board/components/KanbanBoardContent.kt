@@ -54,6 +54,11 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Uni
     var currentDragPosition by remember { mutableStateOf<Offset?>(null) }
     val columnBounds = remember { mutableStateMapOf<TaskState, Rect>() }
 
+    fun clearDragState() {
+        currentDragPosition = null
+        draggedTask = null
+    }
+
     Row(
         modifier = modifier.padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -82,12 +87,10 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Uni
                         }
                     }
 
-                    currentDragPosition = null
-                    draggedTask = null
+                    clearDragState()
                 },
                 onTaskDragCancel = {
-                    currentDragPosition = null
-                    draggedTask = null
+                    clearDragState()
                 },
             )
         }
