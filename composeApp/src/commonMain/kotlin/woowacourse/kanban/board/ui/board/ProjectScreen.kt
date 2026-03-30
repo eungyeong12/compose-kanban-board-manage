@@ -22,9 +22,8 @@ fun ProjectScreen(
     onTaskStateChange: (UUID, UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val uiState = stateHolder.uiState
-    val projects = uiState.projects
-    val selectedProject = uiState.selectedProject
+    val projects = stateHolder.projects
+    val selectedProject = stateHolder.selectedProject
     val authors = listOf("다이노", "페임스")
 
     Row(
@@ -32,7 +31,7 @@ fun ProjectScreen(
     ) {
         Sidebar(
             projects = projects,
-            selectedProject = uiState.selectedProject,
+            selectedProject = stateHolder.selectedProject,
             onProjectChange = { onProjectChange(it.id) },
             modifier = Modifier.width(255.dp),
         )

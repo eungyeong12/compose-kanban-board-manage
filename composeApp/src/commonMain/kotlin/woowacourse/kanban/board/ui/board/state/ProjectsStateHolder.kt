@@ -8,41 +8,34 @@ import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 
-class ProjectsStateHolder(val projects: List<Project> = emptyList()) {
-    private var _uiState by mutableStateOf(
-        ProjectsUiState(
-            projects = projects,
-            selectedProjectId = if (projects.isNotEmpty()) projects.first().id else null,
-        ),
-    )
+class ProjectsStateHolder(initialProjects: List<Project> = emptyList()) {
+    private var _projects by mutableStateOf(initialProjects)
+    private var _selectedProjectId by mutableStateOf(if (initialProjects.isNotEmpty()) initialProjects.first().id else null)
 
-    val uiState: ProjectsUiState get() = _uiState
+    val projects: List<Project> get() = _projects
+    val selectedProject: Project? get() = _projects.find { it.id == _selectedProjectId }
 
     fun selectProject(projectId: UUID) {
-        _uiState = _uiState.copy(selectedProjectId = projectId)
+        _selectedProjectId = projectId
     }
 
     fun addTask(projectId: UUID, task: Task) {
-        _uiState = _uiState.copy(
-            projects = _uiState.projects.map {
-                if (it.id == projectId) {
-                    it.addTask(task)
-                } else {
-                    it
-                }
-            },
-        )
+        _projects = _projects.map {
+            if (it.id == projectId) {
+                it.addTask(task)
+            } else {
+                it
+            }
+        }
     }
 
     fun changeTaskState(projectId: UUID, taskId: UUID, taskState: TaskState) {
-        _uiState = _uiState.copy(
-            projects = _uiState.projects.map {
-                if (it.id == projectId) {
-                    it.changeTaskState(taskId, taskState)
-                } else {
-                    it
-                }
-            },
-        )
+        _projects = _projects.map {
+            if (it.id == projectId) {
+                it.changeTaskState(taskId, taskState)
+            } else {
+                it
+            }
+        }
     }
 }

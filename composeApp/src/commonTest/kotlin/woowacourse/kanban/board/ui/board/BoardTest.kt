@@ -85,8 +85,7 @@ class BoardTest {
         // given
         setContent {
             val stateHolder = remember { ProjectsStateHolder(projects) }
-            val uiState = stateHolder.uiState
-            val selectedProject = uiState.selectedProject
+            val selectedProject = stateHolder.selectedProject
 
             Board(
                 projectName = selectedProject?.name ?: "",
@@ -133,8 +132,7 @@ class BoardTest {
         // given
         setContent {
             val stateHolder = remember { ProjectsStateHolder(projects) }
-            val uiState = stateHolder.uiState
-            val selectedProject = uiState.selectedProject
+            val selectedProject = stateHolder.selectedProject
 
             Board(
                 projectName = selectedProject?.name ?: "",
