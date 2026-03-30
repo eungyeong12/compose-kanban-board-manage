@@ -24,6 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kanbanboard.composeapp.generated.resources.Res
+import kanbanboard.composeapp.generated.resources.completion_rate
+import kanbanboard.composeapp.generated.resources.create_task_button
+import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.ui.theme.CompletedRate
 import woowacourse.kanban.board.ui.theme.OnSurface
 import woowacourse.kanban.board.ui.theme.OutlineVariant
@@ -80,7 +84,7 @@ private fun BoardTitle(projectName: String, modifier: Modifier = Modifier) {
 private fun TaskCompletedRate(completedRate: Int, doneCount: Int, totalCount: Int, modifier: Modifier = Modifier) {
     Text(
         modifier = modifier,
-        text = "완료율: $completedRate% ($doneCount/$totalCount)",
+        text = stringResource(Res.string.completion_rate, completedRate, doneCount, totalCount),
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         color = CompletedRate,
@@ -100,11 +104,11 @@ private fun CreateTaskButton(onClick: () -> Unit, modifier: Modifier = Modifier)
     ) {
         Icon(
             Icons.Default.Add,
-            contentDescription = "새 태스크 생성",
+            contentDescription = stringResource(Res.string.create_task_button),
             modifier = Modifier.size(20.dp),
         )
         Text(
-            text = "새 태스크 생성",
+            text = stringResource(Res.string.create_task_button),
             fontWeight = FontWeight.W400,
             fontSize = 16.sp,
         )

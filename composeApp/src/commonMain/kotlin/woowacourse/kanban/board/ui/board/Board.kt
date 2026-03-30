@@ -11,17 +11,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import java.util.UUID
-import kotlinx.coroutines.launch
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
@@ -30,6 +28,7 @@ import woowacourse.kanban.board.ui.board.components.CreateTaskModalDialog
 import woowacourse.kanban.board.ui.board.components.KanbanBoardContent
 import woowacourse.kanban.board.ui.theme.OutlineVariant
 import woowacourse.kanban.board.ui.theme.Primary
+import java.util.UUID
 
 @Composable
 fun Board(
@@ -42,7 +41,18 @@ fun Board(
 ) {
     var openDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    var snackbarMessage by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(snackbarMessage) {
+        snackbarMessage?.let { message ->
+            snackbarHostState.currentSnackbarData?.dismiss()
+            snackbarHostState.showSnackbar(
+                message = message,
+                withDismissAction = true,
+            )
+            snackbarMessage = null
+        }
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -68,13 +78,7 @@ fun Board(
                     tasks = tasks,
                     onTaskStateChange = { id, targetStatus ->
                         onTaskStateChange(id, targetStatus)
-                        scope.launch {
-                            snackbarHostState.currentSnackbarData?.dismiss()
-                            snackbarHostState.showSnackbar(
-                                message = "태스크가 이동되었습니다.",
-                                withDismissAction = true,
-                            )
-                        }
+                        snackbarMessage = "태스크가 이동되었습니다."
                     },
                     modifier = Modifier
                         .fillMaxSize()
@@ -90,14 +94,8 @@ fun Board(
                     },
                     onConfirmation = {
                         onTaskCreated(it)
+                        snackbarMessage = "새로운 태스크가 추가되었습니다."
                         openDialog = false
-                        scope.launch {
-                            snackbarHostState.currentSnackbarData?.dismiss()
-                            snackbarHostState.showSnackbar(
-                                message = "새로운 태스크가 추가되었습니다.",
-                                withDismissAction = true,
-                            )
-                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()

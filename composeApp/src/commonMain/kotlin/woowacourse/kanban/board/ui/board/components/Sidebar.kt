@@ -16,6 +16,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kanbanboard.composeapp.generated.resources.Res
+import kanbanboard.composeapp.generated.resources.kanban_board_subtitle
+import kanbanboard.composeapp.generated.resources.kanban_board_title
+import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.domain.Project
 
 @Composable
@@ -41,12 +45,12 @@ private fun SidebarHeader(modifier: Modifier = Modifier) {
         modifier = modifier,
     ) {
         Text(
-            text = "프로젝트",
+            text = stringResource(Res.string.kanban_board_title),
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
         )
         Text(
-            text = "4주차 미션 보드",
+            text = stringResource(Res.string.kanban_board_subtitle),
             fontSize = 14.sp,
             color = Color(0xFF6A7282),
         )
