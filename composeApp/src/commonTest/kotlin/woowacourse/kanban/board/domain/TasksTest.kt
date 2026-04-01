@@ -103,4 +103,40 @@ class TasksTest {
         // then
         assertThat(toDoTasks.size).isEqualTo(0)
     }
+
+    @Test
+    fun `태스크를 추가하면 Tasks에 추가된다`() {
+        // given
+        val tasks = Tasks(emptyList())
+
+        // when
+        val newTasks = tasks.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = "다이노"))
+
+        // then
+        assertThat(newTasks.tasks.size).isEqualTo(1)
+    }
+
+    @Test
+    fun `태스크의 상태를 변경하면 Tasks에 변경된 상태가 반영된다`() {
+        // given
+        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노")))
+
+        // when
+        val newTasks = tasks.changeTaskState(tasks.tasks.first().id, TaskState.DONE)
+
+        // then
+        assertThat(newTasks.tasks.first().taskState).isEqualTo(TaskState.DONE)
+    }
+
+    @Test
+    fun `태스크를 수정하면 Tasks에 수정된 태스크가 반영된다`() {
+        // given
+        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노")))
+
+        // when
+        val newTasks = tasks.updateTask(tasks.tasks.first().id, Task(title = "title2", taskState = TaskState.DONE, author = "다이노"))
+
+        // then
+        assertThat(newTasks.tasks.first().title).isEqualTo("title2")
+    }
 }

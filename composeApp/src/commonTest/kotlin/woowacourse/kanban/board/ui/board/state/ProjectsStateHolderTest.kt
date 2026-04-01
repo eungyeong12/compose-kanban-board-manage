@@ -68,4 +68,18 @@ class ProjectsStateHolderTest {
         // then
         assertThat(stateHolder.selectedProject?.tasks?.tasks?.first()?.taskState).isEqualTo(TaskState.DONE)
     }
+
+    @Test
+    fun `첫 번째 프로젝트의 첫 번째 태스크를 수정하면 해당 프로젝트의 태스크 리스트의 첫 번째 태스크가 수정된다`() {
+        // given
+        val stateHolder = ProjectsStateHolder(projects)
+        val task = Task(title = "title", taskState = TaskState.TO_DO, author = "다이노")
+        stateHolder.addTask(projects[0].id, task)
+
+        // when
+        stateHolder.updateTask(projects[0].id, task.id, Task(id = task.id, title = "title2", taskState = TaskState.DONE, author = "다이노"))
+
+        // then
+        assertThat(stateHolder.selectedProject?.tasks?.tasks?.first()?.taskState).isEqualTo(TaskState.DONE)
+    }
 }
