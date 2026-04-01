@@ -4,7 +4,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
-import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -196,5 +195,67 @@ class BoardTest {
 
         // then
         onNodeWithText("태스크가 이동되었습니다.").assertIsDisplayed()
+    }
+
+    @Test
+    fun `태스크를 수정하면 Snackbar를 노출한다`() = runComposeUiTest {
+        // given
+        setContent {
+            val stateHolder = remember { ProjectsStateHolder(projects) }
+
+            Board(
+                projectName = projects.first().name,
+                tasks = projects.first().tasks,
+                onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
+                onTaskUpdated = { taskId, task ->
+                    stateHolder.updateTask(projects.first().id, taskId, task)
+                },
+                onTaskDeleted = { taskId ->
+                    stateHolder.deleteTask(projects.first().id, taskId)
+                },
+                onTaskStateChange = { idx, targetStatus ->
+                    stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
+                },
+                authors = listOf("다이노", "페임스"),
+            )
+        }
+
+        // when
+        onNodeWithText("title").performClick()
+        onNode(hasText("수정") and hasClickAction()).performClick()
+
+        // then
+        onNodeWithText("태스크가 수정되었습니다.").assertIsDisplayed()
+    }
+
+    @Test
+    fun `태스크를 삭제하면 Snackbar를 노출한다`() = runComposeUiTest {
+        // given
+        setContent {
+            val stateHolder = remember { ProjectsStateHolder(projects) }
+
+            Board(
+                projectName = projects.first().name,
+                tasks = projects.first().tasks,
+                onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
+                onTaskUpdated = { taskId, task ->
+                    stateHolder.updateTask(projects.first().id, taskId, task)
+                },
+                onTaskDeleted = { taskId ->
+                    stateHolder.deleteTask(projects.first().id, taskId)
+                },
+                onTaskStateChange = { idx, targetStatus ->
+                    stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
+                },
+                authors = listOf("다이노", "페임스"),
+            )
+        }
+
+        // when
+        onNodeWithText("title").performClick()
+        onNodeWithText("삭제").performClick()
+
+        // then
+        onNodeWithText("태스크가 삭제되었습니다.").assertIsDisplayed()
     }
 }

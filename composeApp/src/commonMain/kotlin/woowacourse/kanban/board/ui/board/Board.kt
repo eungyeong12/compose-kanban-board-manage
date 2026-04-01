@@ -24,6 +24,8 @@ import java.util.UUID
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.add_task_message
 import kanbanboard.composeapp.generated.resources.change_task_state_message
+import kanbanboard.composeapp.generated.resources.delete_task_message
+import kanbanboard.composeapp.generated.resources.update_task_message
 import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
@@ -51,6 +53,8 @@ fun Board(
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
     val changeTaskStateMessage = stringResource(Res.string.change_task_state_message)
     val addTaskMessage = stringResource(Res.string.add_task_message)
+    val updateTaskMessage = stringResource(Res.string.update_task_message)
+    val deleteTaskMessage = stringResource(Res.string.delete_task_message)
 
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let { message ->
@@ -113,12 +117,14 @@ fun Board(
                     onDeleteClick = { id ->
                         if (id != null) {
                             onTaskDeleted(id)
+                            snackbarMessage = deleteTaskMessage
                         }
                         openDialog = false
                     },
                     onUpdateClick = { id, task ->
                         if (id != null) {
                             onTaskUpdated(id, task)
+                            snackbarMessage = updateTaskMessage
                         }
                         openDialog = false
                     },
