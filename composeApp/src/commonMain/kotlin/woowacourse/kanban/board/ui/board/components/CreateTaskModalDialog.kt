@@ -25,7 +25,9 @@ import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
 fun CreateTaskModalDialog(
     authors: List<String>,
     onDismissRequest: () -> Unit,
-    onConfirmation: (UUID?, Task) -> Unit,
+    onConfirmation: (Task) -> Unit,
+    onDeleteClick: () -> Unit,
+    onUpdateClick: (UUID?, Task) -> Unit,
     modifier: Modifier = Modifier,
     editTask: Task? = null,
 ) {
@@ -55,6 +57,8 @@ fun CreateTaskModalDialog(
             authors = authors,
             onDismissRequest = onDismissRequest,
             onConfirmation = onConfirmation,
+            onDeleteClick = onDeleteClick,
+            onUpdateClick = onUpdateClick,
             modifier = modifier
                 .width(672.dp)
                 .clip(RoundedCornerShape(8.dp))
@@ -71,6 +75,8 @@ private fun CreateTaskModalDialogPreview() {
     CreateTaskModalDialog(
         authors = listOf("다이노", "페임스"),
         onDismissRequest = {},
-        onConfirmation = { _, _ -> },
+        onConfirmation = { _ -> },
+        onDeleteClick = {},
+        onUpdateClick = { _, _ -> },
     )
 }
