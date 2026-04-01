@@ -25,6 +25,18 @@ data class Tasks(val tasks: List<Task>) {
         )
     }
 
+    fun updateTask(taskId: UUID, task: Task): Tasks {
+        return copy(
+            tasks = tasks.map {
+                if (it.id == taskId) {
+                    task
+                } else {
+                    it
+                }
+            },
+        )
+    }
+
     fun countByState(taskState: TaskState): Int {
         return tasks.count { it.taskState == taskState }
     }

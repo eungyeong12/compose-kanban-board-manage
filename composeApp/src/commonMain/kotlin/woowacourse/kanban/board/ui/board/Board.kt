@@ -20,11 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import java.util.UUID
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.add_task_message
 import kanbanboard.composeapp.generated.resources.change_task_state_message
 import org.jetbrains.compose.resources.stringResource
-import java.util.UUID
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
@@ -39,11 +39,13 @@ fun Board(
     projectName: String,
     tasks: Tasks,
     onTaskCreated: (Task) -> Unit,
+    onTaskUpdated: (UUID, Task) -> Unit,
     authors: List<String>,
     onTaskStateChange: (UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var openDialog by remember { mutableStateOf(false) }
+    var editTask by remember { mutableStateOf<Task?>(null) }
     val snackbarHostState = remember { SnackbarHostState() }
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
     val changeTaskStateMessage = stringResource(Res.string.change_task_state_message)
@@ -86,6 +88,10 @@ fun Board(
                         onTaskStateChange(id, targetStatus)
                         snackbarMessage = changeTaskStateMessage
                     },
+                    onClick = { task ->
+                        openDialog = true
+                        editTask = task
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Primary),
@@ -98,14 +104,19 @@ fun Board(
                     onDismissRequest = {
                         openDialog = false
                     },
-                    onConfirmation = {
-                        onTaskCreated(it)
+                    onConfirmation = { id, task ->
+                        if (id != null) {
+                            onTaskUpdated(id, task)
+                        } else {
+                            onTaskCreated(task)
+                        }
                         snackbarMessage = addTaskMessage
                         openDialog = false
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center),
+                    editTask = editTask,
                 )
             }
         }
@@ -119,6 +130,7 @@ private fun BoardPreview() {
         projectName = "Compose Desktop 칸반보드",
         tasks = Tasks(mutableListOf()),
         onTaskCreated = {},
+        onTaskUpdated = { _, _ -> },
         authors = listOf("다이노", "페임스"),
         onTaskStateChange = { _, _ -> },
     )

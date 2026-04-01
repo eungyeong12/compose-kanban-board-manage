@@ -38,4 +38,14 @@ class ProjectsStateHolder(initialProjects: List<Project> = emptyList()) {
             }
         }
     }
+
+    fun updateTask(projectId: UUID, taskId: UUID, task: Task) {
+        _projects = _projects.map {
+            if (it.id == projectId) {
+                it.updateTask(taskId, task)
+            } else {
+                it
+            }
+        }
+    }
 }

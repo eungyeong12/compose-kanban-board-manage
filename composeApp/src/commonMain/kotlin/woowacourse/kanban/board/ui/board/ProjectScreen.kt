@@ -19,6 +19,7 @@ fun ProjectScreen(
     stateHolder: ProjectsStateHolder,
     onProjectChange: (UUID) -> Unit,
     onTaskCreated: (UUID, Task) -> Unit,
+    onTaskUpdated: (UUID, UUID, Task) -> Unit,
     onTaskStateChange: (UUID, UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -41,6 +42,9 @@ fun ProjectScreen(
                 projectName = selectedProject.name,
                 tasks = selectedProject.tasks,
                 onTaskCreated = { onTaskCreated(selectedProject.id, it) },
+                onTaskUpdated = { taskId, task ->
+                    onTaskUpdated(selectedProject.id, taskId, task)
+                },
                 onTaskStateChange = { taskId, targetState ->
                     onTaskStateChange(selectedProject.id, taskId, targetState)
                 },
@@ -58,6 +62,7 @@ private fun ProjectScreenPreview() {
         stateHolder = remember { ProjectsStateHolder() },
         onProjectChange = { },
         onTaskCreated = { _, _ -> },
+        onTaskUpdated = { _, _, _ -> },
         onTaskStateChange = { _, _, _ -> },
     )
 }

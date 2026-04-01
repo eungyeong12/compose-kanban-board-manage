@@ -22,6 +22,7 @@ class TaskCardTest {
                     taskState = TaskState.TO_DO,
                     author = "다이노",
                 ),
+                onClick = {},
                 onDragChange = {},
             )
         }
@@ -47,6 +48,7 @@ class TaskCardTest {
                     taskState = TaskState.TO_DO,
                     author = "다이노",
                 ),
+                onClick = {},
                 onDragChange = {},
             )
         }
@@ -67,6 +69,7 @@ class TaskCardTest {
                     taskState = TaskState.TO_DO,
                     author = "다이노",
                 ),
+                onClick = {},
                 onDragChange = {},
             )
         }
@@ -88,6 +91,7 @@ class TaskCardTest {
                     taskState = TaskState.TO_DO,
                     author = "다이노",
                 ),
+                onClick = {},
                 onDragChange = {},
             )
         }
