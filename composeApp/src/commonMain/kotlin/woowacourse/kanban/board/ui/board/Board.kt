@@ -104,13 +104,16 @@ fun Board(
                     onDismissRequest = {
                         openDialog = false
                     },
-                    onConfirmation = { id, task ->
+                    onConfirmation = {
+                        onTaskCreated(it)
+                        snackbarMessage = addTaskMessage
+                        openDialog = false
+                    },
+                    onDeleteClick = {},
+                    onUpdateClick = { id, task ->
                         if (id != null) {
                             onTaskUpdated(id, task)
-                        } else {
-                            onTaskCreated(task)
                         }
-                        snackbarMessage = addTaskMessage
                         openDialog = false
                     },
                     modifier = Modifier

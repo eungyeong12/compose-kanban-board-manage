@@ -26,6 +26,8 @@ import woowacourse.kanban.board.ui.taskcard.components.CreateTaskHeader
 import woowacourse.kanban.board.ui.taskcard.components.TagsInputField
 import woowacourse.kanban.board.ui.taskcard.components.TaskStateSelectField
 import woowacourse.kanban.board.ui.taskcard.components.TitleInputField
+import woowacourse.kanban.board.ui.taskcard.components.UpdateTaskActionButtons
+import woowacourse.kanban.board.ui.taskcard.state.TaskInputMode
 import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
 import woowacourse.kanban.board.util.splitByComma
 
@@ -35,7 +37,9 @@ fun CreateTaskCardModal(
     onStateChange: (TaskInputState) -> Unit,
     authors: List<String>,
     onDismissRequest: () -> Unit,
-    onConfirmation: (UUID?, Task) -> Unit,
+    onConfirmation: (Task) -> Unit,
+    onDeleteClick: () -> Unit,
+    onUpdateClick: (UUID?, Task) -> Unit,
     modifier: Modifier = Modifier,
     editTask: Task? = null,
 ) {
@@ -81,20 +85,39 @@ fun CreateTaskCardModal(
 
         HorizontalDivider()
 
-        CreateTaskActionButtons(
-            taskInputState.init.not() && taskInputState.isNewTaskEnabled,
-            onDismissRequest,
-        ) {
-            onConfirmation(
-                if (editTask != null) editTask.id else null,
-                Task(
-                    title = taskInputState.title,
-                    content = taskInputState.content,
-                    tags = splitByComma(taskInputState.tags),
-                    taskState = taskInputState.selectedState,
-                    author = taskInputState.selectedAuthor,
-                ),
+        if (taskInputState.taskInputMode == TaskInputMode.EDIT) {
+            UpdateTaskActionButtons(
+                taskInputState.init.not() && taskInputState.isNewTaskEnabled,
+                onDismissRequest = onDismissRequest,
+                onDeleteClick = {},
+                onUpdateClick = {
+                    onUpdateClick(
+                        if (editTask != null) editTask.id else null,
+                        Task(
+                            title = taskInputState.title,
+                            content = taskInputState.content,
+                            tags = splitByComma(taskInputState.tags),
+                            taskState = taskInputState.selectedState,
+                            author = taskInputState.selectedAuthor,
+                        ),
+                    )
+                },
             )
+        } else {
+            CreateTaskActionButtons(
+                taskInputState.init.not() && taskInputState.isNewTaskEnabled,
+                onDismissRequest,
+            ) {
+                onConfirmation(
+                    Task(
+                        title = taskInputState.title,
+                        content = taskInputState.content,
+                        tags = splitByComma(taskInputState.tags),
+                        taskState = taskInputState.selectedState,
+                        author = taskInputState.selectedAuthor,
+                    ),
+                )
+            }
         }
     }
 }
@@ -107,7 +130,9 @@ private fun PreviewCreateTaskCardModal() {
         onStateChange = {},
         authors = listOf("다이노", "페임스"),
         onDismissRequest = {},
-        onConfirmation = { _, _ -> },
+        onConfirmation = { _ -> },
+        onDeleteClick = {},
+        onUpdateClick = { _, _ -> },
         modifier = Modifier
             .background(Color.White).padding(16.dp),
     )

@@ -30,7 +30,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("지워질 제목입니다").performTextClearance()
@@ -46,7 +48,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
 
@@ -66,7 +70,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -86,7 +92,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -106,7 +114,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -126,7 +136,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -146,7 +158,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("생성").assertIsEnabled()
@@ -166,7 +180,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
 
@@ -183,7 +199,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("To Do").performClick()
@@ -205,7 +223,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
 
@@ -221,7 +241,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
 
@@ -242,7 +264,9 @@ class CreateTaskCardModalTest {
                 onStateChange = { taskInputState = it },
                 authors = authors,
                 onDismissRequest = {},
-                onConfirmation = { _, _ -> },
+                onConfirmation = { _ -> },
+                onDeleteClick = {},
+                onUpdateClick = { _, _ -> },
             )
         }
         onNodeWithText("생성").assertIsNotEnabled()
