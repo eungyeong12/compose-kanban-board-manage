@@ -4,6 +4,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -48,6 +49,7 @@ class BoardTest {
                 tasks = projects.first().tasks,
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
+                onTaskDeleted = { },
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
@@ -69,6 +71,7 @@ class BoardTest {
                 tasks = projects.first().tasks,
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
+                onTaskDeleted = { },
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
@@ -94,6 +97,7 @@ class BoardTest {
                 tasks = selectedProject?.tasks ?: Tasks(emptyList()),
                 onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
                 onTaskUpdated = { _, _ -> },
+                onTaskDeleted = { },
                 onTaskStateChange = { _, _ -> },
                 authors = listOf("다이노", "페임스"),
             )
@@ -117,6 +121,7 @@ class BoardTest {
                 tasks = projects.first().tasks,
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
+                onTaskDeleted = { },
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
@@ -143,6 +148,7 @@ class BoardTest {
                 tasks = selectedProject?.tasks ?: Tasks(emptyList()),
                 onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
                 onTaskUpdated = { _, _ -> },
+                onTaskDeleted = { },
                 onTaskStateChange = { _, _ -> },
                 authors = listOf("다이노", "페임스"),
             )
@@ -170,6 +176,7 @@ class BoardTest {
                 tasks = projects.first().tasks,
                 onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
                 onTaskUpdated = { _, _ -> },
+                onTaskDeleted = { },
                 onTaskStateChange = { idx, targetStatus ->
                     stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
                 },

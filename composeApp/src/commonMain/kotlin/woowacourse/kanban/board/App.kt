@@ -27,6 +27,9 @@ fun App() {
         onTaskUpdated = { projectId, taskId, task ->
             stateHolder.updateTask(projectId, taskId, task)
         },
+        onTaskDeleted = { projectId, taskId ->
+            stateHolder.deleteTask(projectId, taskId)
+        },
         onTaskStateChange = { projectId, taskId, taskState ->
             stateHolder.changeTaskState(projectId, taskId, taskState)
         },

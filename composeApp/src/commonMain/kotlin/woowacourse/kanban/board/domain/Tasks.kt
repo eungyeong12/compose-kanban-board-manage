@@ -37,6 +37,10 @@ data class Tasks(val tasks: List<Task>) {
         )
     }
 
+    fun deleteTask(taskId: UUID): Tasks {
+        return copy(tasks = tasks.filter { it.id != taskId })
+    }
+
     fun countByState(taskState: TaskState): Int {
         return tasks.count { it.taskState == taskState }
     }

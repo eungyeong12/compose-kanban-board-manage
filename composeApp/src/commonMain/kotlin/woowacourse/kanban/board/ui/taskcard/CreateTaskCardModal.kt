@@ -38,7 +38,7 @@ fun CreateTaskCardModal(
     authors: List<String>,
     onDismissRequest: () -> Unit,
     onConfirmation: (Task) -> Unit,
-    onDeleteClick: () -> Unit,
+    onDeleteClick: (UUID?) -> Unit,
     onUpdateClick: (UUID?, Task) -> Unit,
     modifier: Modifier = Modifier,
     editTask: Task? = null,
@@ -89,10 +89,10 @@ fun CreateTaskCardModal(
             UpdateTaskActionButtons(
                 taskInputState.init.not() && taskInputState.isNewTaskEnabled,
                 onDismissRequest = onDismissRequest,
-                onDeleteClick = {},
+                onDeleteClick = { onDeleteClick(editTask?.id) },
                 onUpdateClick = {
                     onUpdateClick(
-                        if (editTask != null) editTask.id else null,
+                        editTask?.id,
                         Task(
                             title = taskInputState.title,
                             content = taskInputState.content,

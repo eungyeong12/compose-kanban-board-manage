@@ -26,7 +26,7 @@ fun CreateTaskModalDialog(
     authors: List<String>,
     onDismissRequest: () -> Unit,
     onConfirmation: (Task) -> Unit,
-    onDeleteClick: () -> Unit,
+    onDeleteClick: (UUID?) -> Unit,
     onUpdateClick: (UUID?, Task) -> Unit,
     modifier: Modifier = Modifier,
     editTask: Task? = null,

@@ -47,6 +47,9 @@ class ProjectScreenTest {
                 onTaskUpdated = { projectId, taskIdx, task ->
                     stateHolder.updateTask(projectId, taskIdx, task)
                 },
+                onTaskDeleted = { projectId, taskIdx ->
+                    stateHolder.deleteTask(projectId, taskIdx)
+                },
                 onTaskStateChange = { projectId, taskIdx, taskState ->
                     stateHolder.changeTaskState(projectId, taskIdx, taskState)
                 },
@@ -70,7 +73,11 @@ class ProjectScreenTest {
                 onTaskCreated = { projectId, task -> stateHolder.addTask(projectId, task) },
                 onTaskUpdated = { projectId, taskIdx, task ->
                     stateHolder.updateTask(projectId, taskIdx, task)
-                }, onTaskStateChange = { projectId, taskIdx, taskState ->
+                },
+                onTaskDeleted = { projectId, taskIdx ->
+                    stateHolder.deleteTask(projectId, taskIdx)
+                },
+                onTaskStateChange = { projectId, taskIdx, taskState ->
                     stateHolder.changeTaskState(projectId, taskIdx, taskState)
                 },
                 modifier = Modifier.fillMaxSize(),
