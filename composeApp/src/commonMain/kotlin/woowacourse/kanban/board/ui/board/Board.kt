@@ -40,6 +40,7 @@ fun Board(
     tasks: Tasks,
     onTaskCreated: (Task) -> Unit,
     onTaskUpdated: (UUID, Task) -> Unit,
+    onTaskDeleted: (UUID) -> Unit,
     authors: List<String>,
     onTaskStateChange: (UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
@@ -109,7 +110,12 @@ fun Board(
                         snackbarMessage = addTaskMessage
                         openDialog = false
                     },
-                    onDeleteClick = {},
+                    onDeleteClick = { id ->
+                        if (id != null) {
+                            onTaskDeleted(id)
+                        }
+                        openDialog = false
+                    },
                     onUpdateClick = { id, task ->
                         if (id != null) {
                             onTaskUpdated(id, task)
@@ -134,6 +140,7 @@ private fun BoardPreview() {
         tasks = Tasks(mutableListOf()),
         onTaskCreated = {},
         onTaskUpdated = { _, _ -> },
+        onTaskDeleted = {},
         authors = listOf("다이노", "페임스"),
         onTaskStateChange = { _, _ -> },
     )

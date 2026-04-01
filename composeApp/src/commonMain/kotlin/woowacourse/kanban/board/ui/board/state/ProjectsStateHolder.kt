@@ -48,4 +48,14 @@ class ProjectsStateHolder(initialProjects: List<Project> = emptyList()) {
             }
         }
     }
+
+    fun deleteTask(projectId: UUID, taskId: UUID) {
+        _projects = _projects.map {
+            if (it.id == projectId) {
+                it.deleteTask(taskId)
+            } else {
+                it
+            }
+        }
+    }
 }

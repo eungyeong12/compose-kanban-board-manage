@@ -14,4 +14,8 @@ data class Project(val id: UUID = UUID.randomUUID(), val name: String, val tasks
     fun updateTask(taskId: UUID, task: Task): Project {
         return copy(tasks = tasks.updateTask(taskId, task))
     }
+
+    fun deleteTask(taskId: UUID): Project {
+        return copy(tasks = tasks.deleteTask(taskId))
+    }
 }
