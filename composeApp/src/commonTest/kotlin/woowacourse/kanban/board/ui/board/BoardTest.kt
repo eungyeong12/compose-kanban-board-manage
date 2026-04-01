@@ -47,6 +47,7 @@ class BoardTest {
                 projectName = projects.first().name,
                 tasks = projects.first().tasks,
                 onTaskCreated = {},
+                onTaskUpdated = { _, _ -> },
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
@@ -67,6 +68,7 @@ class BoardTest {
                 projectName = projects.first().name,
                 tasks = projects.first().tasks,
                 onTaskCreated = {},
+                onTaskUpdated = { _, _ -> },
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
@@ -91,6 +93,7 @@ class BoardTest {
                 projectName = selectedProject?.name ?: "",
                 tasks = selectedProject?.tasks ?: Tasks(emptyList()),
                 onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
+                onTaskUpdated = { _, _ -> },
                 onTaskStateChange = { _, _ -> },
                 authors = listOf("다이노", "페임스"),
             )
@@ -113,6 +116,7 @@ class BoardTest {
                 projectName = projects.first().name,
                 tasks = projects.first().tasks,
                 onTaskCreated = {},
+                onTaskUpdated = { _, _ -> },
                 authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
@@ -138,6 +142,7 @@ class BoardTest {
                 projectName = selectedProject?.name ?: "",
                 tasks = selectedProject?.tasks ?: Tasks(emptyList()),
                 onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
+                onTaskUpdated = { _, _ -> },
                 onTaskStateChange = { _, _ -> },
                 authors = listOf("다이노", "페임스"),
             )
@@ -164,6 +169,7 @@ class BoardTest {
                 projectName = projects.first().name,
                 tasks = projects.first().tasks,
                 onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
+                onTaskUpdated = { _, _ -> },
                 onTaskStateChange = { idx, targetStatus ->
                     stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
                 },

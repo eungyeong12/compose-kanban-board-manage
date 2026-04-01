@@ -49,6 +49,7 @@ import woowacourse.kanban.board.ui.theme.TextSecondary
 @Composable
 fun TaskCard(
     task: Task,
+    onClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
     onDragStart: () -> Unit = {},
     onDragChange: (Offset) -> Unit,
@@ -58,6 +59,7 @@ fun TaskCard(
     var cardWindowPosition by remember { mutableStateOf(Offset.Zero) }
 
     Card(
+        onClick = { onClick(task) },
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
         ),
@@ -178,6 +180,7 @@ private fun TaskCardPreview() {
             taskState = TaskState.TO_DO,
             author = "다이노",
         ),
+        onClick = {},
         onDragChange = {},
         modifier = Modifier.padding(16.dp),
     )

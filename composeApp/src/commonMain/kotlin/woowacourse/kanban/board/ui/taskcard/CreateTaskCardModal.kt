@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import java.util.UUID
 import woowacourse.kanban.board.domain.Tags
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.Title
@@ -34,14 +35,15 @@ fun CreateTaskCardModal(
     onStateChange: (TaskInputState) -> Unit,
     authors: List<String>,
     onDismissRequest: () -> Unit,
-    onConfirmation: (Task) -> Unit,
+    onConfirmation: (UUID?, Task) -> Unit,
     modifier: Modifier = Modifier,
+    editTask: Task? = null,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        CreateTaskHeader(onDismissRequest)
+        CreateTaskHeader(taskInputState.taskInputMode, onDismissRequest)
         HorizontalDivider()
         TitleInputField(taskInputState.title, taskInputState.titleError) {
             onStateChange(
@@ -84,6 +86,7 @@ fun CreateTaskCardModal(
             onDismissRequest,
         ) {
             onConfirmation(
+                if (editTask != null) editTask.id else null,
                 Task(
                     title = taskInputState.title,
                     content = taskInputState.content,
@@ -104,7 +107,7 @@ private fun PreviewCreateTaskCardModal() {
         onStateChange = {},
         authors = listOf("다이노", "페임스"),
         onDismissRequest = {},
-        onConfirmation = {},
+        onConfirmation = { _, _ -> },
         modifier = Modifier
             .background(Color.White).padding(16.dp),
     )

@@ -13,17 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import woowacourse.kanban.board.ui.taskcard.state.TaskInputMode
 import woowacourse.kanban.board.ui.theme.TextPrimary
 
 @Composable
-fun CreateTaskHeader(onDismissRequest: () -> Unit) {
+fun CreateTaskHeader(taskInputMode: TaskInputMode, onDismissRequest: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "새 태스크 생성",
+            text = if (taskInputMode == TaskInputMode.CREATE) "새 태스크 생성" else "기존 태스크 수정",
             fontSize = 20.sp,
             color = TextPrimary,
             fontWeight = FontWeight.W600,

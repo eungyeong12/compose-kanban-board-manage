@@ -15,18 +15,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import java.util.UUID
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.ui.taskcard.CreateTaskCardModal
+import woowacourse.kanban.board.ui.taskcard.state.TaskInputMode
 import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
 
 @Composable
 fun CreateTaskModalDialog(
     authors: List<String>,
     onDismissRequest: () -> Unit,
-    onConfirmation: (Task) -> Unit,
+    onConfirmation: (UUID?, Task) -> Unit,
     modifier: Modifier = Modifier,
+    editTask: Task? = null,
 ) {
-    var taskInputState by remember { mutableStateOf(TaskInputState(selectedAuthor = authors.first())) }
+    var taskInputState by remember {
+        mutableStateOf(
+            if (editTask != null) {
+                TaskInputState(
+                    title = editTask.title,
+                    content = editTask.content,
+                    tags = editTask.tags.joinToString(),
+                    selectedState = editTask.taskState,
+                    selectedAuthor = editTask.author,
+                    taskInputMode = TaskInputMode.EDIT,
+                )
+            } else {
+                TaskInputState(selectedAuthor = authors.first())
+            },
+        )
+    }
 
     Dialog(
         onDismissRequest = {},
@@ -42,6 +60,7 @@ fun CreateTaskModalDialog(
                 .clip(RoundedCornerShape(8.dp))
                 .background(Color.White)
                 .padding(16.dp),
+            editTask = editTask,
         )
     }
 }
@@ -52,6 +71,6 @@ private fun CreateTaskModalDialogPreview() {
     CreateTaskModalDialog(
         authors = listOf("다이노", "페임스"),
         onDismissRequest = {},
-        onConfirmation = {},
+        onConfirmation = { _, _ -> },
     )
 }

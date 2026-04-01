@@ -10,4 +10,8 @@ data class Project(val id: UUID = UUID.randomUUID(), val name: String, val tasks
     fun changeTaskState(taskId: UUID, taskState: TaskState): Project {
         return copy(tasks = tasks.changeTaskState(taskId, taskState))
     }
+
+    fun updateTask(taskId: UUID, task: Task): Project {
+        return copy(tasks = tasks.updateTask(taskId, task))
+    }
 }

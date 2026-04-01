@@ -49,7 +49,7 @@ import woowacourse.kanban.board.ui.theme.ToDoContent
 import woowacourse.kanban.board.ui.theme.ToDoTitle
 
 @Composable
-fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Unit, modifier: Modifier = Modifier) {
+fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Unit, onClick: (Task) -> Unit, modifier: Modifier = Modifier) {
     var draggedTask by remember { mutableStateOf<Task?>(null) }
     var currentDragPosition by remember { mutableStateOf<Offset?>(null) }
     val columnBounds = remember { mutableStateMapOf<TaskState, Rect>() }
@@ -70,6 +70,7 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Uni
                 taskState.titleColor(),
                 taskState.contentColor(),
                 taskState.borderColor(),
+                onClick = onClick,
                 modifier = Modifier.testTag(taskState.name),
                 getIsDropTarget = {
                     currentDragPosition?.let { columnBounds[taskState]?.contains(it) } ?: false
@@ -104,6 +105,7 @@ private fun StateTasks(
     titleColor: Color,
     contentColor: Color,
     borderColor: Color,
+    onClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
     getIsDropTarget: () -> Boolean = { false },
     onBoundsChanged: (Rect) -> Unit = {},
@@ -138,6 +140,7 @@ private fun StateTasks(
         StateTasksTitle(titleColor, taskState, tasks)
         TaskCards(
             tasks.getTasksByState(taskState),
+            onClick = onClick,
             onTaskDragStart = onTaskDragStart,
             onTaskDragChange = onTaskDragChange,
             onTaskDragEnd = onTaskDragEnd,

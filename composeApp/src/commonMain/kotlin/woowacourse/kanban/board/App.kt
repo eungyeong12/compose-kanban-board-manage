@@ -24,6 +24,9 @@ fun App() {
         stateHolder = stateHolder,
         onProjectChange = { projectId -> stateHolder.selectProject(projectId) },
         onTaskCreated = { projectId, task -> stateHolder.addTask(projectId, task) },
+        onTaskUpdated = { projectId, taskId, task ->
+            stateHolder.updateTask(projectId, taskId, task)
+        },
         onTaskStateChange = { projectId, taskId, taskState ->
             stateHolder.changeTaskState(projectId, taskId, taskState)
         },

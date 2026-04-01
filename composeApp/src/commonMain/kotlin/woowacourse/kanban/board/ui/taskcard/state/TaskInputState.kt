@@ -12,9 +12,15 @@ data class TaskInputState(
     val tagError: TagError = TagError.NONE,
     val selectedState: TaskState = TaskState.TO_DO,
     val selectedAuthor: String = "",
+    val taskInputMode: TaskInputMode = TaskInputMode.CREATE,
 ) {
     val init: Boolean
         get() = title.isEmpty() && content.isEmpty() && tags.isEmpty()
     val isNewTaskEnabled: Boolean
         get() = titleError == TitleError.NONE && tagError == TagError.NONE
+}
+
+enum class TaskInputMode {
+    CREATE,
+    EDIT,
 }
