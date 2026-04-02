@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.util.UUID
+import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.Tags
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.Title
@@ -35,7 +36,6 @@ import woowacourse.kanban.board.util.splitByComma
 fun CreateTaskCardModal(
     taskInputState: TaskInputState,
     onStateChange: (TaskInputState) -> Unit,
-    authors: List<String>,
     onDismissRequest: () -> Unit,
     onConfirmation: (Task) -> Unit,
     onDeleteClick: (UUID?) -> Unit,
@@ -77,10 +77,15 @@ fun CreateTaskCardModal(
             }
         }
         TaskStateSelectField(taskInputState.selectedState) { newTaskState ->
-            onStateChange(taskInputState.copy(selectedState = newTaskState))
+            onStateChange(
+                taskInputState.copy(
+                    selectedState = newTaskState,
+                    selectedAuthor = Author.getAuthors(newTaskState.inAuthorRequired).first(),
+                ),
+            )
         }
 
-        AuthorSelectField(authors, taskInputState.selectedAuthor) { newAuthor ->
+        AuthorSelectField(Author.getAuthors(taskInputState.selectedState.inAuthorRequired), taskInputState.selectedAuthor) { newAuthor ->
             onStateChange(taskInputState.copy(selectedAuthor = newAuthor))
         }
 
@@ -129,7 +134,6 @@ private fun PreviewCreateTaskCardModal() {
     CreateTaskCardModal(
         taskInputState = TaskInputState(),
         onStateChange = {},
-        authors = listOf("다이노", "페임스"),
         onDismissRequest = {},
         onConfirmation = { _ -> },
         onDeleteClick = {},

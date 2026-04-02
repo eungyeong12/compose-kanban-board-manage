@@ -14,6 +14,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
 import java.util.UUID
 import kotlin.test.Test
+import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
@@ -30,7 +31,7 @@ class BoardTest {
                     Task(
                         title = "title",
                         taskState = TaskState.TO_DO,
-                        author = "다이노",
+                        author = Author.DINO,
                     ),
                 ),
             ),
@@ -49,7 +50,6 @@ class BoardTest {
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
-                authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
         }
@@ -71,7 +71,6 @@ class BoardTest {
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
-                authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
         }
@@ -98,7 +97,6 @@ class BoardTest {
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
                 onTaskStateChange = { _, _ -> },
-                authors = listOf("다이노", "페임스"),
             )
         }
 
@@ -121,7 +119,6 @@ class BoardTest {
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
-                authors = listOf("다이노", "페임스"),
                 onTaskStateChange = { _, _ -> },
             )
         }
@@ -149,7 +146,6 @@ class BoardTest {
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
                 onTaskStateChange = { _, _ -> },
-                authors = listOf("다이노", "페임스"),
             )
         }
 
@@ -179,7 +175,6 @@ class BoardTest {
                 onTaskStateChange = { idx, targetStatus ->
                     stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
                 },
-                authors = listOf("다이노", "페임스"),
             )
         }
 
@@ -216,7 +211,6 @@ class BoardTest {
                 onTaskStateChange = { idx, targetStatus ->
                     stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
                 },
-                authors = listOf("다이노", "페임스"),
             )
         }
 
@@ -247,7 +241,6 @@ class BoardTest {
                 onTaskStateChange = { idx, targetStatus ->
                     stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
                 },
-                authors = listOf("다이노", "페임스"),
             )
         }
 

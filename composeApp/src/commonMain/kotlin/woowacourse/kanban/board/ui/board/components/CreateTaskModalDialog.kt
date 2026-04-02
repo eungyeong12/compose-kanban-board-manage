@@ -16,14 +16,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import java.util.UUID
+import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.Task
+import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.ui.taskcard.CreateTaskCardModal
 import woowacourse.kanban.board.ui.taskcard.state.TaskInputMode
 import woowacourse.kanban.board.ui.taskcard.state.TaskInputState
 
 @Composable
 fun CreateTaskModalDialog(
-    authors: List<String>,
     onDismissRequest: () -> Unit,
     onConfirmation: (Task) -> Unit,
     onDeleteClick: (UUID?) -> Unit,
@@ -39,11 +40,14 @@ fun CreateTaskModalDialog(
                     content = editTask.content,
                     tags = editTask.tags.joinToString(),
                     selectedState = editTask.taskState,
-                    selectedAuthor = editTask.author,
+                    selectedAuthor = Author.getAuthors(editTask.taskState.inAuthorRequired).first(),
                     taskInputMode = TaskInputMode.EDIT,
                 )
             } else {
-                TaskInputState(selectedAuthor = authors.first())
+                TaskInputState(
+                    selectedState = TaskState.TO_DO,
+                    selectedAuthor = Author.getAuthors(TaskState.TO_DO.inAuthorRequired).first(),
+                )
             },
         )
     }
@@ -54,7 +58,6 @@ fun CreateTaskModalDialog(
         CreateTaskCardModal(
             taskInputState = taskInputState,
             onStateChange = { taskInputState = it },
-            authors = authors,
             onDismissRequest = onDismissRequest,
             onConfirmation = onConfirmation,
             onDeleteClick = onDeleteClick,
@@ -73,7 +76,6 @@ fun CreateTaskModalDialog(
 @Composable
 private fun CreateTaskModalDialogPreview() {
     CreateTaskModalDialog(
-        authors = listOf("다이노", "페임스"),
         onDismissRequest = {},
         onConfirmation = { _ -> },
         onDeleteClick = {},
