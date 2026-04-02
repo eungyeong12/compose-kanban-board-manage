@@ -35,7 +35,7 @@ fun UpdateTaskActionButtons(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
-            onClick = { onDismissRequest() },
+            onClick = onDismissRequest,
             colors = ButtonDefaults.buttonColors(
                 containerColor = PrimaryContainer,
                 contentColor = TextSecondary,
