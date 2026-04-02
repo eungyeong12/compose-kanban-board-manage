@@ -33,7 +33,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.util.UUID
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
@@ -54,7 +53,7 @@ import woowacourse.kanban.board.ui.theme.ToDoTitle
 @Composable
 fun KanbanBoardContent(
     tasks: Tasks,
-    onTaskStateChange: (UUID, TaskState, TaskState) -> Unit,
+    onTaskStateChange: (Task, TaskState) -> Unit,
     onClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -92,7 +91,7 @@ fun KanbanBoardContent(
 
                     draggedTask?.let { task ->
                         if (targetStatus != null && task.taskState != targetStatus) {
-                            onTaskStateChange(task.id, task.taskState, targetStatus)
+                            onTaskStateChange(task, targetStatus)
                         }
                     }
 

@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import java.util.UUID
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.add_task_message
+import kanbanboard.composeapp.generated.resources.author_not_exists
 import kanbanboard.composeapp.generated.resources.change_task_state_message
 import kanbanboard.composeapp.generated.resources.delete_task_message
 import kanbanboard.composeapp.generated.resources.invalid_state_transition_message
@@ -58,6 +59,7 @@ fun Board(
     val deleteTaskMessage = stringResource(Res.string.delete_task_message)
     val notDeleteTaskMessage = stringResource(Res.string.not_delete_task_message)
     val invalidStateTransitionMessage = stringResource(Res.string.invalid_state_transition_message)
+    val authorNotExists = stringResource(Res.string.author_not_exists)
 
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let { message ->
@@ -92,12 +94,16 @@ fun Board(
 
                 KanbanBoardContent(
                     tasks = tasks,
-                    onTaskStateChange = { id, currentState, targetState ->
-                        if (TaskState.isAvailableTransition(currentState, targetState)) {
-                            onTaskStateChange(id, targetState)
-                            snackbarMessage = changeTaskStateMessage
+                    onTaskStateChange = { task, targetState ->
+                        if (task.canChangeTaskState(targetState)) {
+                            if (TaskState.isAvailableTransition(task.taskState, targetState)) {
+                                onTaskStateChange(task.id, targetState)
+                                snackbarMessage = changeTaskStateMessage
+                            } else {
+                                snackbarMessage = invalidStateTransitionMessage
+                            }
                         } else {
-                            snackbarMessage = invalidStateTransitionMessage
+                            snackbarMessage = authorNotExists
                         }
                     },
                     onClick = { task ->
