@@ -70,7 +70,7 @@ private fun TaskStateContent(selectedState: TaskState, onStateChanged: (TaskStat
                     Text(
                         text = it.toText(),
                         color = if (selectedState == it) TaskStateSelected else TaskStateText,
-                        modifier = Modifier.width(180.dp).padding(vertical = 16.dp),
+                        modifier = Modifier.width(130.dp).padding(vertical = 16.dp),
                         textAlign = TextAlign.Center,
                     )
                 },
