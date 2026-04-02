@@ -44,7 +44,6 @@ fun Board(
     onTaskCreated: (Task) -> Unit,
     onTaskUpdated: (UUID, Task) -> Unit,
     onTaskDeleted: (UUID) -> Unit,
-    authors: List<String>,
     onTaskStateChange: (UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -107,7 +106,6 @@ fun Board(
 
             if (openDialog) {
                 CreateTaskModalDialog(
-                    authors = authors,
                     onDismissRequest = {
                         openDialog = false
                     },
@@ -153,7 +151,6 @@ private fun BoardPreview() {
         onTaskCreated = {},
         onTaskUpdated = { _, _ -> },
         onTaskDeleted = {},
-        authors = listOf("다이노", "페임스"),
         onTaskStateChange = { _, _ -> },
     )
 }

@@ -26,7 +26,6 @@ fun ProjectScreen(
 ) {
     val projects = stateHolder.projects
     val selectedProject = stateHolder.selectedProject
-    val authors = listOf("다이노", "페임스")
 
     Row(
         modifier = modifier,
@@ -52,7 +51,6 @@ fun ProjectScreen(
                 onTaskStateChange = { taskId, targetState ->
                     onTaskStateChange(selectedProject.id, taskId, targetState)
                 },
-                authors = authors,
                 modifier = Modifier.size(width = 1295.dp, height = 909.dp),
             )
         }

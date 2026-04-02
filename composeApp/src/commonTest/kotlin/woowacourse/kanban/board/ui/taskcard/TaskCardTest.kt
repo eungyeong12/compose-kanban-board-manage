@@ -4,6 +4,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.runComposeUiTest
 import org.junit.Test
+import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 
@@ -20,7 +21,7 @@ class TaskCardTest {
                     content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
                     tags = listOf("컴포넌트", "성능"),
                     taskState = TaskState.TO_DO,
-                    author = "다이노",
+                    author = Author.DINO,
                 ),
                 onClick = {},
                 onDragChange = {},
@@ -46,7 +47,7 @@ class TaskCardTest {
                     title = "LazyColumn 컴포넌트 구현",
                     tags = listOf("컴포넌트", "성능"),
                     taskState = TaskState.TO_DO,
-                    author = "다이노",
+                    author = Author.DINO,
                 ),
                 onClick = {},
                 onDragChange = {},
@@ -67,7 +68,7 @@ class TaskCardTest {
                     title = "LazyColumn 컴포넌트 구현",
                     content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
                     taskState = TaskState.TO_DO,
-                    author = "다이노",
+                    author = Author.DINO,
                 ),
                 onClick = {},
                 onDragChange = {},
@@ -89,7 +90,7 @@ class TaskCardTest {
                 Task(
                     title = "LazyColumn 컴포넌트 구현",
                     taskState = TaskState.TO_DO,
-                    author = "다이노",
+                    author = Author.DINO,
                 ),
                 onClick = {},
                 onDragChange = {},

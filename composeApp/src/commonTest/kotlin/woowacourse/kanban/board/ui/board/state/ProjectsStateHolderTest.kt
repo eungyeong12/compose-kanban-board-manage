@@ -2,6 +2,7 @@ package woowacourse.kanban.board.ui.board.state
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
@@ -50,7 +51,7 @@ class ProjectsStateHolderTest {
         val stateHolder = ProjectsStateHolder(projects)
 
         // when
-        stateHolder.addTask(projects[0].id, Task(title = "title", taskState = TaskState.TO_DO, author = "다이노"))
+        stateHolder.addTask(projects[0].id, Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO))
 
         // then
         assertThat(stateHolder.selectedProject?.tasks?.tasks?.size).isEqualTo(1)
@@ -60,7 +61,7 @@ class ProjectsStateHolderTest {
     fun `첫 번째 프로젝트의 첫 번째 태스크의 상태를 변경하면 해당 프로젝트의 태스크 리스트의 첫 번째 태스크의 상태가 변경된다`() {
         // given
         val stateHolder = ProjectsStateHolder(projects)
-        stateHolder.addTask(projects[0].id, Task(title = "title", taskState = TaskState.TO_DO, author = "다이노"))
+        stateHolder.addTask(projects[0].id, Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO))
 
         // when
         stateHolder.changeTaskState(projects[0].id, stateHolder.selectedProject!!.tasks.tasks.first().id, TaskState.DONE)
@@ -73,11 +74,11 @@ class ProjectsStateHolderTest {
     fun `첫 번째 프로젝트의 첫 번째 태스크를 수정하면 해당 프로젝트의 태스크 리스트의 첫 번째 태스크가 수정된다`() {
         // given
         val stateHolder = ProjectsStateHolder(projects)
-        val task = Task(title = "title", taskState = TaskState.TO_DO, author = "다이노")
+        val task = Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO)
         stateHolder.addTask(projects[0].id, task)
 
         // when
-        stateHolder.updateTask(projects[0].id, task.id, Task(id = task.id, title = "title2", taskState = TaskState.DONE, author = "다이노"))
+        stateHolder.updateTask(projects[0].id, task.id, Task(id = task.id, title = "title2", taskState = TaskState.DONE, author = Author.DINO))
 
         // then
         assertThat(stateHolder.selectedProject?.tasks?.tasks?.first()?.taskState).isEqualTo(TaskState.DONE)

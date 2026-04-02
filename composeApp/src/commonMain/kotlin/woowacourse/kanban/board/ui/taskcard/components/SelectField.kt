@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,7 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.ui.board.components.toText
 import woowacourse.kanban.board.ui.theme.AccountCircle
@@ -46,7 +48,7 @@ fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (TaskState) -
 }
 
 @Composable
-fun AuthorSelectField(authors: List<String>, selectedAuthor: String, onAuthorSelected: (String) -> Unit) {
+fun AuthorSelectField(authors: List<Author>, selectedAuthor: Author, onAuthorSelected: (Author) -> Unit) {
     LabelText("담당자 *")
     AuthorsContent(
         selectedAuthor = selectedAuthor,
@@ -82,9 +84,9 @@ private fun TaskStateContent(selectedState: TaskState, onStateChanged: (TaskStat
 
 @Composable
 private fun AuthorsContent(
-    selectedAuthor: String,
-    onAuthorSelected: (String) -> Unit,
-    authors: List<String>,
+    selectedAuthor: Author,
+    onAuthorSelected: (Author) -> Unit,
+    authors: List<Author>,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -99,21 +101,30 @@ private fun AuthorsContent(
                 content = {
                     Row(
                         modifier = Modifier
-                            .width(200.dp)
-                            .padding(vertical = 16.dp),
+                            .width(if (it == Author.NONE) 72.dp else 200.dp)
+                            .height(68.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Icon(
-                            modifier = Modifier.padding(horizontal = 12.dp),
-                            imageVector = Icons.Default.AccountCircle,
-                            tint = AccountCircle,
-                            contentDescription = "기본 프로필 이미지",
-                        )
-                        Text(
-                            text = it,
-                            color = TextPrimary,
-                            textAlign = TextAlign.Center,
-                        )
+                        if (it == Author.NONE) {
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = "없음",
+                                color = TextPrimary,
+                                textAlign = TextAlign.Center,
+                            )
+                        } else {
+                            Icon(
+                                modifier = Modifier.padding(horizontal = 12.dp),
+                                imageVector = Icons.Default.AccountCircle,
+                                tint = AccountCircle,
+                                contentDescription = "기본 프로필 이미지",
+                            )
+                            Text(
+                                text = it.toText(),
+                                color = TextPrimary,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 },
                 modifier = Modifier.semantics { selected = selectedAuthor == it },
@@ -141,4 +152,10 @@ private fun CustomButton(
     ) {
         content()
     }
+}
+
+fun Author.toText(): String = when (this) {
+    Author.NONE -> "없음"
+    Author.DINO -> "다이노"
+    Author.JAMES -> "페임스"
 }

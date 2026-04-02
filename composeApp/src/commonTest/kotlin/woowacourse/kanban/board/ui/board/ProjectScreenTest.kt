@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import org.junit.Test
+import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
@@ -27,7 +28,7 @@ class ProjectScreenTest {
                     Task(
                         title = "test_title",
                         taskState = TaskState.TO_DO,
-                        author = "다이노",
+                        author = Author.DINO,
                     ),
                 ),
             ),

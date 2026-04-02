@@ -10,11 +10,11 @@ class TasksTest {
         // given
         val tasks = Tasks(
             listOf(
-                Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노"),
-                Task(title = "title2", taskState = TaskState.TO_DO, author = "다이노"),
-                Task(title = "title3", taskState = TaskState.IN_PROGRESS, author = "다이노"),
-                Task(title = "title4", taskState = TaskState.DONE, author = "다이노"),
-                Task(title = "title5", taskState = TaskState.DONE, author = "다이노"),
+                Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO),
+                Task(title = "title2", taskState = TaskState.TO_DO, author = Author.DINO),
+                Task(title = "title3", taskState = TaskState.IN_PROGRESS, author = Author.DINO),
+                Task(title = "title4", taskState = TaskState.DONE, author = Author.DINO),
+                Task(title = "title5", taskState = TaskState.DONE, author = Author.DINO),
             ),
         )
 
@@ -46,10 +46,10 @@ class TasksTest {
         // given
         val tasks = Tasks(
             listOf(
-                Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노"),
-                Task(title = "title2", taskState = TaskState.TO_DO, author = "다이노"),
-                Task(title = "title4", taskState = TaskState.DONE, author = "다이노"),
-                Task(title = "title5", taskState = TaskState.DONE, author = "다이노"),
+                Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO),
+                Task(title = "title2", taskState = TaskState.TO_DO, author = Author.DINO),
+                Task(title = "title4", taskState = TaskState.DONE, author = Author.DINO),
+                Task(title = "title5", taskState = TaskState.DONE, author = Author.DINO),
             ),
         )
 
@@ -77,10 +77,10 @@ class TasksTest {
         // given
         val tasks = Tasks(
             listOf(
-                Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노"),
-                Task(title = "title2", taskState = TaskState.TO_DO, author = "다이노"),
-                Task(title = "title4", taskState = TaskState.DONE, author = "다이노"),
-                Task(title = "title5", taskState = TaskState.DONE, author = "다이노"),
+                Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO),
+                Task(title = "title2", taskState = TaskState.TO_DO, author = Author.DINO),
+                Task(title = "title4", taskState = TaskState.DONE, author = Author.DINO),
+                Task(title = "title5", taskState = TaskState.DONE, author = Author.DINO),
             ),
         )
 
@@ -110,7 +110,7 @@ class TasksTest {
         val tasks = Tasks(emptyList())
 
         // when
-        val newTasks = tasks.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = "다이노"))
+        val newTasks = tasks.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO))
 
         // then
         assertThat(newTasks.tasks.size).isEqualTo(1)
@@ -119,7 +119,7 @@ class TasksTest {
     @Test
     fun `태스크의 상태를 변경하면 Tasks에 변경된 상태가 반영된다`() {
         // given
-        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노")))
+        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO)))
 
         // when
         val newTasks = tasks.changeTaskState(tasks.tasks.first().id, TaskState.DONE)
@@ -131,10 +131,10 @@ class TasksTest {
     @Test
     fun `태스크를 수정하면 Tasks에 수정된 태스크가 반영된다`() {
         // given
-        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = "다이노")))
+        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO)))
 
         // when
-        val newTasks = tasks.updateTask(tasks.tasks.first().id, Task(title = "title2", taskState = TaskState.DONE, author = "다이노"))
+        val newTasks = tasks.updateTask(tasks.tasks.first().id, Task(title = "title2", taskState = TaskState.DONE, author = Author.DINO))
 
         // then
         assertThat(newTasks.tasks.first().title).isEqualTo("title2")
