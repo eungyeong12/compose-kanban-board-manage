@@ -119,6 +119,7 @@ fun Board(
             if (openDialog) {
                 CreateTaskModalDialog(
                     onDismissRequest = {
+                        editTask = null
                         openDialog = false
                     },
                     onConfirmation = {
