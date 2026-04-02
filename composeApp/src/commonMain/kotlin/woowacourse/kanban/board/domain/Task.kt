@@ -11,4 +11,8 @@ data class Task(
     val author: Author,
 ) {
     fun changeTaskState(taskState: TaskState): Task = copy(taskState = taskState)
+
+    fun canChangeTaskState(taskState: TaskState): Boolean {
+        return !(taskState != TaskState.TO_DO && author == Author.NONE)
+    }
 }
