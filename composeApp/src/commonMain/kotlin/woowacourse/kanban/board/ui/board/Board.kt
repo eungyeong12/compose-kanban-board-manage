@@ -25,6 +25,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.add_task_message
 import kanbanboard.composeapp.generated.resources.change_task_state_message
 import kanbanboard.composeapp.generated.resources.delete_task_message
+import kanbanboard.composeapp.generated.resources.not_delete_task_message
 import kanbanboard.composeapp.generated.resources.update_task_message
 import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.domain.Task
@@ -55,6 +56,7 @@ fun Board(
     val addTaskMessage = stringResource(Res.string.add_task_message)
     val updateTaskMessage = stringResource(Res.string.update_task_message)
     val deleteTaskMessage = stringResource(Res.string.delete_task_message)
+    val notDeleteTaskMessage = stringResource(Res.string.not_delete_task_message)
 
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let { message ->
@@ -118,8 +120,11 @@ fun Board(
                         if (id != null) {
                             onTaskDeleted(id)
                             snackbarMessage = deleteTaskMessage
+                        } else {
+                            snackbarMessage = notDeleteTaskMessage
                         }
                         openDialog = false
+                        editTask = null
                     },
                     onUpdateClick = { id, task ->
                         if (id != null) {
@@ -127,6 +132,7 @@ fun Board(
                             snackbarMessage = updateTaskMessage
                         }
                         openDialog = false
+                        editTask = null
                     },
                     modifier = Modifier
                         .fillMaxWidth()

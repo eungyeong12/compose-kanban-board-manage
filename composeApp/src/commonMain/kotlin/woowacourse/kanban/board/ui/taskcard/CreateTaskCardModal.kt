@@ -79,6 +79,7 @@ fun CreateTaskCardModal(
         TaskStateSelectField(taskInputState.selectedState) { newTaskState ->
             onStateChange(taskInputState.copy(selectedState = newTaskState))
         }
+
         AuthorSelectField(authors, taskInputState.selectedAuthor) { newAuthor ->
             onStateChange(taskInputState.copy(selectedAuthor = newAuthor))
         }
@@ -89,7 +90,7 @@ fun CreateTaskCardModal(
             UpdateTaskActionButtons(
                 taskInputState.init.not() && taskInputState.isNewTaskEnabled,
                 onDismissRequest = onDismissRequest,
-                onDeleteClick = { onDeleteClick(editTask?.id) },
+                onDeleteClick = { onDeleteClick(if (taskInputState.selectedState.isDeletable && editTask != null) editTask.id else null) },
                 onUpdateClick = {
                     onUpdateClick(
                         editTask?.id,

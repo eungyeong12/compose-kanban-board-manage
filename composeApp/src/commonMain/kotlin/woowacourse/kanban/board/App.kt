@@ -20,9 +20,6 @@ fun App() {
 
     val stateHolder = remember { ProjectsStateHolder(projects) }
 
-    val authors = listOf("다이노", "페임스")
-    val authorsWithNone = listOf("없음") + authors
-
     ProjectScreen(
         stateHolder = stateHolder,
         onProjectChange = { projectId -> stateHolder.selectProject(projectId) },
