@@ -25,6 +25,7 @@ import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.add_task_message
 import kanbanboard.composeapp.generated.resources.change_task_state_message
 import kanbanboard.composeapp.generated.resources.delete_task_message
+import kanbanboard.composeapp.generated.resources.invalid_state_transition_message
 import kanbanboard.composeapp.generated.resources.not_delete_task_message
 import kanbanboard.composeapp.generated.resources.update_task_message
 import org.jetbrains.compose.resources.stringResource
@@ -56,6 +57,7 @@ fun Board(
     val updateTaskMessage = stringResource(Res.string.update_task_message)
     val deleteTaskMessage = stringResource(Res.string.delete_task_message)
     val notDeleteTaskMessage = stringResource(Res.string.not_delete_task_message)
+    val invalidStateTransitionMessage = stringResource(Res.string.invalid_state_transition_message)
 
     LaunchedEffect(snackbarMessage) {
         snackbarMessage?.let { message ->
@@ -90,9 +92,13 @@ fun Board(
 
                 KanbanBoardContent(
                     tasks = tasks,
-                    onTaskStateChange = { id, targetStatus ->
-                        onTaskStateChange(id, targetStatus)
-                        snackbarMessage = changeTaskStateMessage
+                    onTaskStateChange = { id, currentState, targetState ->
+                        if (TaskState.isAvailableTransition(currentState, targetState)) {
+                            onTaskStateChange(id, targetState)
+                            snackbarMessage = changeTaskStateMessage
+                        } else {
+                            snackbarMessage = invalidStateTransitionMessage
+                        }
                     },
                     onClick = { task ->
                         openDialog = true

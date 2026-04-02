@@ -52,7 +52,12 @@ import woowacourse.kanban.board.ui.theme.ToDoContent
 import woowacourse.kanban.board.ui.theme.ToDoTitle
 
 @Composable
-fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Unit, onClick: (Task) -> Unit, modifier: Modifier = Modifier) {
+fun KanbanBoardContent(
+    tasks: Tasks,
+    onTaskStateChange: (UUID, TaskState, TaskState) -> Unit,
+    onClick: (Task) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     var draggedTask by remember { mutableStateOf<Task?>(null) }
     var currentDragPosition by remember { mutableStateOf<Offset?>(null) }
     val columnBounds = remember { mutableStateMapOf<TaskState, Rect>() }
@@ -87,7 +92,7 @@ fun KanbanBoardContent(tasks: Tasks, onTaskStateChange: (UUID, TaskState) -> Uni
 
                     draggedTask?.let { task ->
                         if (targetStatus != null && task.taskState != targetStatus) {
-                            onTaskStateChange(task.id, targetStatus)
+                            onTaskStateChange(task.id, task.taskState, targetStatus)
                         }
                     }
 
