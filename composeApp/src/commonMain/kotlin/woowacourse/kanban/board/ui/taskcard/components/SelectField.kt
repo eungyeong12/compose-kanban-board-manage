@@ -25,6 +25,11 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kanbanboard.composeapp.generated.resources.Res
+import kanbanboard.composeapp.generated.resources.author_label
+import kanbanboard.composeapp.generated.resources.none
+import kanbanboard.composeapp.generated.resources.state_label
+import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.ui.board.components.toText
@@ -40,7 +45,7 @@ import woowacourse.kanban.board.ui.theme.TextPrimary
 
 @Composable
 fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (TaskState) -> Unit) {
-    LabelText("상태 *")
+    LabelText(stringResource(Res.string.state_label))
     TaskStateContent(
         selectedState = selectedState,
         onStateChanged = onStateChanged,
@@ -49,7 +54,7 @@ fun TaskStateSelectField(selectedState: TaskState, onStateChanged: (TaskState) -
 
 @Composable
 fun AuthorSelectField(authors: List<Author>, selectedAuthor: Author, onAuthorSelected: (Author) -> Unit) {
-    LabelText("담당자 *")
+    LabelText(stringResource(Res.string.author_label))
     AuthorsContent(
         selectedAuthor = selectedAuthor,
         onAuthorSelected = onAuthorSelected,
@@ -108,7 +113,7 @@ private fun AuthorsContent(
                         if (it == Author.NONE) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
-                                text = "없음",
+                                text = stringResource(Res.string.none),
                                 color = TextPrimary,
                                 textAlign = TextAlign.Center,
                             )

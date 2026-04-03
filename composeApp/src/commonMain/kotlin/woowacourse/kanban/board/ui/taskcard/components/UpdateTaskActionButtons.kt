@@ -15,6 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kanbanboard.composeapp.generated.resources.Res
+import kanbanboard.composeapp.generated.resources.cancel
+import kanbanboard.composeapp.generated.resources.delete
+import kanbanboard.composeapp.generated.resources.update
+import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.ui.theme.DisabledContainer
 import woowacourse.kanban.board.ui.theme.OnSurface
 import woowacourse.kanban.board.ui.theme.OnSurfaceVariant
@@ -41,7 +46,7 @@ fun UpdateTaskActionButtons(
                 contentColor = TextSecondary,
             ),
         ) {
-            Text(text = "취소", textAlign = TextAlign.Center)
+            Text(text = stringResource(Res.string.cancel), textAlign = TextAlign.Center)
         }
         Spacer(modifier = Modifier.width(12.dp))
         Button(
@@ -54,7 +59,7 @@ fun UpdateTaskActionButtons(
                 disabledContentColor = OnSurfaceVariant,
             ),
         ) {
-            Text(text = "삭제", textAlign = TextAlign.Center)
+            Text(text = stringResource(Res.string.delete), textAlign = TextAlign.Center)
         }
         Spacer(modifier = Modifier.width(12.dp))
         Button(
@@ -68,7 +73,7 @@ fun UpdateTaskActionButtons(
                 disabledContentColor = OnSurfaceVariant,
             ),
         ) {
-            Text(text = "수정", textAlign = TextAlign.Center)
+            Text(text = stringResource(Res.string.update), textAlign = TextAlign.Center)
         }
     }
 }
