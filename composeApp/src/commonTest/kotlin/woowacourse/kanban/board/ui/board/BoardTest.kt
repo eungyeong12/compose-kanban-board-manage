@@ -12,32 +12,29 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.runComposeUiTest
-import java.util.UUID
 import kotlin.test.Test
 import woowacourse.kanban.board.domain.Author
-import woowacourse.kanban.board.domain.Project
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.domain.Tasks
+import woowacourse.kanban.board.ui.board.state.ProjectState
 import woowacourse.kanban.board.ui.board.state.ProjectsStateHolder
 
 @OptIn(ExperimentalTestApi::class)
 class BoardTest {
     val projects = listOf(
-        Project(
+        ProjectState(
             name = "Compose1",
-            tasks = Tasks(
-                listOf(
-                    Task(
-                        title = "title",
-                        taskState = TaskState.TO_DO,
-                        author = Author.DINO,
-                    ),
+            initialTasks = listOf(
+                Task(
+                    title = "title",
+                    taskState = TaskState.TO_DO,
+                    author = Author.DINO,
                 ),
             ),
         ),
-        Project(name = "Compose2"),
-        Project(name = "Compose3너무너무길다란이름"),
+        ProjectState(name = "Compose2"),
+        ProjectState(name = "Compose3너무너무길다란이름"),
     )
 
     @Test
@@ -92,8 +89,8 @@ class BoardTest {
 
             Board(
                 projectName = selectedProject?.name ?: "",
-                tasks = selectedProject?.tasks ?: Tasks(emptyList()),
-                onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
+                tasks = selectedProject?.tasks ?: Tasks(mutableListOf()),
+                onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
                 onTaskStateChange = { _, _ -> },
@@ -141,8 +138,8 @@ class BoardTest {
 
             Board(
                 projectName = selectedProject?.name ?: "",
-                tasks = selectedProject?.tasks ?: Tasks(emptyList()),
-                onTaskCreated = { stateHolder.addTask(selectedProject?.id ?: UUID.randomUUID(), it) },
+                tasks = selectedProject?.tasks ?: Tasks(mutableListOf()),
+                onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
                 onTaskStateChange = { _, _ -> },
@@ -169,11 +166,11 @@ class BoardTest {
             Board(
                 projectName = projects.first().name,
                 tasks = projects.first().tasks,
-                onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
+                onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
                 onTaskStateChange = { idx, targetStatus ->
-                    stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
+                    stateHolder.selectedProject?.changeTaskState(idx, targetStatus)
                 },
             )
         }
@@ -201,15 +198,15 @@ class BoardTest {
             Board(
                 projectName = projects.first().name,
                 tasks = projects.first().tasks,
-                onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
+                onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { taskId, task ->
-                    stateHolder.updateTask(projects.first().id, taskId, task)
+                    stateHolder.selectedProject?.updateTask(taskId, task)
                 },
                 onTaskDeleted = { taskId ->
-                    stateHolder.deleteTask(projects.first().id, taskId)
+                    stateHolder.selectedProject?.deleteTask(taskId)
                 },
                 onTaskStateChange = { idx, targetStatus ->
-                    stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
+                    stateHolder.selectedProject?.changeTaskState(idx, targetStatus)
                 },
             )
         }
@@ -231,15 +228,15 @@ class BoardTest {
             Board(
                 projectName = projects.first().name,
                 tasks = projects.first().tasks,
-                onTaskCreated = { stateHolder.addTask(projects.first().id, it) },
+                onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { taskId, task ->
-                    stateHolder.updateTask(projects.first().id, taskId, task)
+                    stateHolder.selectedProject?.updateTask(taskId, task)
                 },
                 onTaskDeleted = { taskId ->
-                    stateHolder.deleteTask(projects.first().id, taskId)
+                    stateHolder.selectedProject?.deleteTask(taskId)
                 },
                 onTaskStateChange = { idx, targetStatus ->
-                    stateHolder.changeTaskState(projects.first().id, idx, targetStatus)
+                    stateHolder.selectedProject?.changeTaskState(idx, targetStatus)
                 },
             )
         }

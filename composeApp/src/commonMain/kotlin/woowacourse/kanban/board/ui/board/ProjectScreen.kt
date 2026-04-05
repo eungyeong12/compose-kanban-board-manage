@@ -18,10 +18,10 @@ import woowacourse.kanban.board.ui.board.state.ProjectsStateHolder
 fun ProjectScreen(
     stateHolder: ProjectsStateHolder,
     onProjectChange: (UUID) -> Unit,
-    onTaskCreated: (UUID, Task) -> Unit,
-    onTaskUpdated: (UUID, UUID, Task) -> Unit,
-    onTaskDeleted: (UUID, UUID) -> Unit,
-    onTaskStateChange: (UUID, UUID, TaskState) -> Unit,
+    onTaskCreated: (Task) -> Unit,
+    onTaskUpdated: (UUID, Task) -> Unit,
+    onTaskDeleted: (UUID) -> Unit,
+    onTaskStateChange: (UUID, TaskState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val projects = stateHolder.projects
@@ -41,15 +41,15 @@ fun ProjectScreen(
             Board(
                 projectName = selectedProject.name,
                 tasks = selectedProject.tasks,
-                onTaskCreated = { onTaskCreated(selectedProject.id, it) },
+                onTaskCreated = { onTaskCreated(it) },
                 onTaskUpdated = { taskId, task ->
-                    onTaskUpdated(selectedProject.id, taskId, task)
+                    onTaskUpdated(taskId, task)
                 },
                 onTaskDeleted = { taskId ->
-                    onTaskDeleted(selectedProject.id, taskId)
+                    onTaskDeleted(taskId)
                 },
                 onTaskStateChange = { taskId, targetState ->
-                    onTaskStateChange(selectedProject.id, taskId, targetState)
+                    onTaskStateChange(taskId, targetState)
                 },
                 modifier = Modifier.size(width = 1295.dp, height = 909.dp),
             )
@@ -63,9 +63,9 @@ private fun ProjectScreenPreview() {
     ProjectScreen(
         stateHolder = remember { ProjectsStateHolder() },
         onProjectChange = { },
-        onTaskCreated = { _, _ -> },
-        onTaskUpdated = { _, _, _ -> },
-        onTaskDeleted = { _, _ -> },
-        onTaskStateChange = { _, _, _ -> },
+        onTaskCreated = { _ -> },
+        onTaskUpdated = { _, _ -> },
+        onTaskDeleted = { _ -> },
+        onTaskStateChange = { _, _ -> },
     )
 }

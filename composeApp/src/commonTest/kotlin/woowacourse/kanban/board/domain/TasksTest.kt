@@ -9,7 +9,7 @@ class TasksTest {
     fun `TODO 2개, INPROGRESS 1개, DONE 2개인 경우 각 상태별 태스크의 개수는 2, 1, 2가 반환한다`() {
         // given
         val tasks = Tasks(
-            listOf(
+            mutableListOf(
                 Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO),
                 Task(title = "title2", taskState = TaskState.TO_DO, author = Author.DINO),
                 Task(title = "title3", taskState = TaskState.IN_PROGRESS, author = Author.DINO),
@@ -32,7 +32,7 @@ class TasksTest {
     @Test
     fun `Tasks가 비어 있는 경우 TODO의 개수는 0개이다`() {
         // given
-        val tasks = Tasks(emptyList())
+        val tasks = Tasks(mutableListOf())
 
         // when
         val toDoCount = tasks.countByState(TaskState.TO_DO)
@@ -45,7 +45,7 @@ class TasksTest {
     fun `TODO 2개, DONE 2개인 경우 완료된 일의 비율은 50이다`() {
         // given
         val tasks = Tasks(
-            listOf(
+            mutableListOf(
                 Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO),
                 Task(title = "title2", taskState = TaskState.TO_DO, author = Author.DINO),
                 Task(title = "title4", taskState = TaskState.DONE, author = Author.DINO),
@@ -63,7 +63,7 @@ class TasksTest {
     @Test
     fun `Tasks가 비어있는 경우 완료된 일의 비율은 0이다`() {
         // given
-        val tasks = Tasks(emptyList())
+        val tasks = Tasks(mutableListOf())
 
         // when
         val completedRate = tasks.completedRate
@@ -76,7 +76,7 @@ class TasksTest {
     fun `TODO 2개, DONE 2개인 경우 TODO 상태의 태스크는 2개이고 첫 번째 태스크의 제목은 title1이다`() {
         // given
         val tasks = Tasks(
-            listOf(
+            mutableListOf(
                 Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO),
                 Task(title = "title2", taskState = TaskState.TO_DO, author = Author.DINO),
                 Task(title = "title4", taskState = TaskState.DONE, author = Author.DINO),
@@ -95,7 +95,7 @@ class TasksTest {
     @Test
     fun `Tasks가 비어 있는 경우 TODO 상태의 태스크는 0개이다`() {
         // given
-        val tasks = Tasks(emptyList())
+        val tasks = Tasks(mutableListOf())
 
         // when
         val toDoTasks = tasks.getTasksByState(TaskState.TO_DO)
@@ -107,36 +107,36 @@ class TasksTest {
     @Test
     fun `태스크를 추가하면 Tasks에 추가된다`() {
         // given
-        val tasks = Tasks(emptyList())
+        val tasks = Tasks(mutableListOf())
 
         // when
-        val newTasks = tasks.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO))
+        tasks.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO))
 
         // then
-        assertThat(newTasks.tasks.size).isEqualTo(1)
+        assertThat(tasks.tasks.size).isEqualTo(1)
     }
 
     @Test
     fun `태스크의 상태를 변경하면 Tasks에 변경된 상태가 반영된다`() {
         // given
-        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO)))
+        val tasks = Tasks(mutableListOf(Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO)))
 
         // when
-        val newTasks = tasks.changeTaskState(tasks.tasks.first().id, TaskState.DONE)
+        tasks.changeTaskState(tasks.tasks.first().id, TaskState.DONE)
 
         // then
-        assertThat(newTasks.tasks.first().taskState).isEqualTo(TaskState.DONE)
+        assertThat(tasks.tasks.first().taskState).isEqualTo(TaskState.DONE)
     }
 
     @Test
     fun `태스크를 수정하면 Tasks에 수정된 태스크가 반영된다`() {
         // given
-        val tasks = Tasks(listOf(Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO)))
+        val tasks = Tasks(mutableListOf(Task(title = "title1", taskState = TaskState.TO_DO, author = Author.DINO)))
 
         // when
-        val newTasks = tasks.updateTask(tasks.tasks.first().id, Task(title = "title2", taskState = TaskState.DONE, author = Author.DINO))
+        tasks.updateTask(tasks.tasks.first().id, Task(title = "title2", taskState = TaskState.DONE, author = Author.DINO))
 
         // then
-        assertThat(newTasks.tasks.first().title).isEqualTo("title2")
+        assertThat(tasks.tasks.first().title).isEqualTo("title2")
     }
 }
