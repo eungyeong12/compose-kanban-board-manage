@@ -29,7 +29,7 @@ class BoardTest {
                 Task(
                     title = "title",
                     taskState = TaskState.TO_DO,
-                    author = Author.DINO,
+                    author = Author.User("다이노"),
                 ),
             ),
         ),

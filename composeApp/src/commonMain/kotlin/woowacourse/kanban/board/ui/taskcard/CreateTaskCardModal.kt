@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.util.UUID
-import woowacourse.kanban.board.domain.Author
+import woowacourse.kanban.board.domain.AuthorPolicy
 import woowacourse.kanban.board.domain.Tags
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.Title
@@ -80,12 +80,15 @@ fun CreateTaskCardModal(
             onStateChange(
                 taskInputState.copy(
                     selectedState = newTaskState,
-                    selectedAuthor = Author.getAuthors(newTaskState.inAuthorRequired).first(),
+                    selectedAuthor = AuthorPolicy.selectableAuthors(newTaskState.inAuthorRequired).first(),
                 ),
             )
         }
 
-        AuthorSelectField(Author.getAuthors(taskInputState.selectedState.inAuthorRequired), taskInputState.selectedAuthor) { newAuthor ->
+        AuthorSelectField(
+            AuthorPolicy.selectableAuthors(taskInputState.selectedState.inAuthorRequired),
+            taskInputState.selectedAuthor,
+        ) { newAuthor ->
             onStateChange(taskInputState.copy(selectedAuthor = newAuthor))
         }
 

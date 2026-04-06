@@ -162,8 +162,7 @@ private fun CustomButton(
 
 fun Author.toText(): String = when (this) {
     Author.NONE -> "없음"
-    Author.DINO -> "다이노"
-    Author.JAMES -> "페임스"
+    is Author.User -> name
 }
 
 @Preview
@@ -175,5 +174,11 @@ private fun TaskStateSelectFieldPreview() {
 @Preview
 @Composable
 private fun AuthorSelectFieldPreview() {
-    AuthorSelectField(authors = listOf(Author.NONE, Author.DINO, Author.JAMES), selectedAuthor = Author.NONE, onAuthorSelected = {})
+    AuthorSelectField(
+        authors = listOf(
+            Author.NONE, Author.User("다이노"), Author.User("페임스"),
+        ),
+        selectedAuthor = Author.NONE,
+        onAuthorSelected = {},
+    )
 }

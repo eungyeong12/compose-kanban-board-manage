@@ -182,7 +182,7 @@ private fun TaskCardPreview() {
             content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
             tags = listOf("컴포넌트", "성능"),
             taskState = TaskState.TO_DO,
-            author = Author.DINO,
+            author = Author.User("다이노"),
         ),
         onClick = {},
         onDragChange = {},

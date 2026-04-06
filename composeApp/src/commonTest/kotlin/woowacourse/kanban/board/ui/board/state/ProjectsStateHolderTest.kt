@@ -50,7 +50,7 @@ class ProjectsStateHolderTest {
         val stateHolder = ProjectsStateHolder(projects)
 
         // when
-        stateHolder.selectedProject?.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO))
+        stateHolder.selectedProject?.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.User("다이노")))
 
         // then
         assertThat(stateHolder.selectedProject?.tasks?.tasks?.size).isEqualTo(1)
@@ -60,7 +60,7 @@ class ProjectsStateHolderTest {
     fun `첫 번째 프로젝트의 첫 번째 태스크의 상태를 변경하면 해당 프로젝트의 태스크 리스트의 첫 번째 태스크의 상태가 변경된다`() {
         // given
         val stateHolder = ProjectsStateHolder(projects)
-        stateHolder.selectedProject?.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO))
+        stateHolder.selectedProject?.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.User("다이노")))
 
         // when
         stateHolder.selectedProject?.changeTaskState(stateHolder.selectedProject!!.tasks.tasks.first().id, TaskState.DONE)
@@ -73,7 +73,7 @@ class ProjectsStateHolderTest {
     fun `첫 번째 프로젝트의 첫 번째 태스크를 수정하면 해당 프로젝트의 태스크 리스트의 첫 번째 태스크가 수정된다`() {
         // given
         val stateHolder = ProjectsStateHolder(projects)
-        val task = Task(title = "title", taskState = TaskState.TO_DO, author = Author.DINO)
+        val task = Task(title = "title", taskState = TaskState.TO_DO, author = Author.User("다이노"))
         stateHolder.selectedProject?.addTask(task)
 
         // when
@@ -83,7 +83,7 @@ class ProjectsStateHolderTest {
                 id = task.id,
                 title = "title2",
                 taskState = TaskState.DONE,
-                author = Author.DINO,
+                author = Author.User("다이노"),
             ),
         )
 

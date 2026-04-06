@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import java.util.UUID
-import woowacourse.kanban.board.domain.Author
+import woowacourse.kanban.board.domain.AuthorPolicy
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
 import woowacourse.kanban.board.ui.taskcard.CreateTaskCardModal
@@ -40,13 +40,13 @@ fun CreateTaskModalDialog(
                     content = editTask.content,
                     tags = editTask.tags.joinToString(),
                     selectedState = editTask.taskState,
-                    selectedAuthor = Author.getAuthors(editTask.taskState.inAuthorRequired).first(),
+                    selectedAuthor = AuthorPolicy.selectableAuthors(editTask.taskState.inAuthorRequired).first(),
                     taskInputMode = TaskInputMode.EDIT,
                 )
             } else {
                 TaskInputState(
                     selectedState = TaskState.TO_DO,
-                    selectedAuthor = Author.getAuthors(TaskState.TO_DO.inAuthorRequired).first(),
+                    selectedAuthor = AuthorPolicy.selectableAuthors(TaskState.TO_DO.inAuthorRequired).first(),
                 )
             },
         )

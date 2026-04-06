@@ -27,7 +27,7 @@ class TaskTest {
         val task = Task(
             title = "title",
             taskState = TaskState.TO_DO,
-            author = Author.DINO,
+            author = Author.User("다이노"),
         )
 
         // when
