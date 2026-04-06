@@ -53,7 +53,7 @@ class ProjectsStateHolderTest {
         stateHolder.selectedProject?.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.User("다이노")))
 
         // then
-        assertThat(stateHolder.selectedProject?.tasks?.tasks?.size).isEqualTo(1)
+        assertThat(stateHolder.selectedProject?.tasks?.size).isEqualTo(1)
     }
 
     @Test
@@ -63,10 +63,10 @@ class ProjectsStateHolderTest {
         stateHolder.selectedProject?.addTask(Task(title = "title", taskState = TaskState.TO_DO, author = Author.User("다이노")))
 
         // when
-        stateHolder.selectedProject?.changeTaskState(stateHolder.selectedProject!!.tasks.tasks.first().id, TaskState.DONE)
+        stateHolder.selectedProject?.changeTaskState(stateHolder.selectedProject!!.tasks.first().id, TaskState.DONE)
 
         // then
-        assertThat(stateHolder.selectedProject?.tasks?.tasks?.first()?.taskState).isEqualTo(TaskState.DONE)
+        assertThat(stateHolder.selectedProject?.tasks?.first()?.taskState).isEqualTo(TaskState.DONE)
     }
 
     @Test
@@ -88,6 +88,6 @@ class ProjectsStateHolderTest {
         )
 
         // then
-        assertThat(stateHolder.selectedProject?.tasks?.tasks?.first()?.taskState).isEqualTo(TaskState.DONE)
+        assertThat(stateHolder.selectedProject?.tasks?.first()?.taskState).isEqualTo(TaskState.DONE)
     }
 }

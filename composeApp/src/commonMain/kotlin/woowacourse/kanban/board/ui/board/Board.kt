@@ -32,17 +32,16 @@ import kanbanboard.composeapp.generated.resources.update_task_message
 import org.jetbrains.compose.resources.stringResource
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
-import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.components.BoardHeader
 import woowacourse.kanban.board.ui.board.components.CreateTaskModalDialog
 import woowacourse.kanban.board.ui.board.components.KanbanBoardContent
+import woowacourse.kanban.board.ui.board.state.ProjectState
 import woowacourse.kanban.board.ui.theme.OutlineVariant
 import woowacourse.kanban.board.ui.theme.Primary
 
 @Composable
 fun Board(
-    projectName: String,
-    tasks: Tasks,
+    project: ProjectState,
     onTaskCreated: (Task) -> Unit,
     onTaskUpdated: (UUID, Task) -> Unit,
     onTaskDeleted: (UUID) -> Unit,
@@ -80,10 +79,10 @@ fun Board(
         ) {
             Column {
                 BoardHeader(
-                    projectName = projectName,
-                    completedRate = tasks.completedRate,
-                    doneCount = tasks.countByState(TaskState.DONE),
-                    totalCount = tasks.totalCount,
+                    projectName = project.name,
+                    completedRate = project.completedRate,
+                    doneCount = project.countByState(TaskState.DONE),
+                    totalCount = project.totalCount,
                     onClick = { openDialog = true },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -93,7 +92,7 @@ fun Board(
                 HorizontalDivider(color = OutlineVariant)
 
                 KanbanBoardContent(
-                    tasks = tasks,
+                    project = project,
                     onTaskStateChange = { task, targetState ->
                         if (task.canChangeTaskState(targetState)) {
                             if (TaskState.isAvailableTransition(task.taskState, targetState)) {
@@ -159,8 +158,7 @@ fun Board(
 @Composable
 private fun BoardPreview() {
     Board(
-        projectName = "Compose Desktop 칸반보드",
-        tasks = Tasks(mutableListOf()),
+        project = ProjectState(name = "Compose Desktop 칸반보드"),
         onTaskCreated = {},
         onTaskUpdated = { _, _ -> },
         onTaskDeleted = {},

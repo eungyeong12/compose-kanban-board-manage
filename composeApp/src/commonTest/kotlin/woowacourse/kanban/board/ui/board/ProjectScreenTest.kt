@@ -22,7 +22,7 @@ class ProjectScreenTest {
         ProjectState(name = "Compose1"),
         ProjectState(
             name = "Compose2",
-            initialTasks = listOf(
+            initialTasks = mutableListOf(
                 Task(
                     title = "test_title",
                     taskState = TaskState.TO_DO,

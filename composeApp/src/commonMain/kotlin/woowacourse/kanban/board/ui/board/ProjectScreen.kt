@@ -39,8 +39,7 @@ fun ProjectScreen(
 
         if (selectedProject != null) {
             Board(
-                projectName = selectedProject.name,
-                tasks = selectedProject.tasks,
+                project = selectedProject,
                 onTaskCreated = { onTaskCreated(it) },
                 onTaskUpdated = { taskId, task ->
                     onTaskUpdated(taskId, task)

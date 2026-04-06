@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
-import woowacourse.kanban.board.domain.Tasks
+import woowacourse.kanban.board.ui.board.state.ProjectState
 import woowacourse.kanban.board.ui.taskcard.TaskCards
 import woowacourse.kanban.board.ui.theme.DoneBorder
 import woowacourse.kanban.board.ui.theme.DoneContent
@@ -52,7 +52,7 @@ import woowacourse.kanban.board.ui.theme.ToDoTitle
 
 @Composable
 fun KanbanBoardContent(
-    tasks: Tasks,
+    project: ProjectState,
     onTaskStateChange: (Task, TaskState) -> Unit,
     onClick: (Task) -> Unit,
     modifier: Modifier = Modifier,
@@ -72,7 +72,7 @@ fun KanbanBoardContent(
     ) {
         TaskState.entries.forEach { taskState ->
             StateTasks(
-                tasks,
+                project,
                 taskState,
                 taskState.titleColor(),
                 taskState.contentColor(),
@@ -107,7 +107,7 @@ fun KanbanBoardContent(
 
 @Composable
 private fun StateTasks(
-    tasks: Tasks,
+    project: ProjectState,
     taskState: TaskState,
     titleColor: Color,
     contentColor: Color,
@@ -144,9 +144,9 @@ private fun StateTasks(
             ),
 
     ) {
-        StateTasksTitle(titleColor, taskState, tasks)
+        StateTasksTitle(titleColor, taskState, project)
         TaskCards(
-            tasks.getTasksByState(taskState),
+            project.getTasksByState(taskState),
             onClick = onClick,
             onTaskDragStart = onTaskDragStart,
             onTaskDragChange = onTaskDragChange,
@@ -160,7 +160,7 @@ private fun StateTasks(
 }
 
 @Composable
-private fun StateTasksTitle(titleColor: Color, taskState: TaskState, tasks: Tasks, modifier: Modifier = Modifier) {
+private fun StateTasksTitle(titleColor: Color, taskState: TaskState, project: ProjectState, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -181,7 +181,7 @@ private fun StateTasksTitle(titleColor: Color, taskState: TaskState, tasks: Task
                 .background(Color.White),
         ) {
             Text(
-                text = tasks.countByState(taskState).toString(),
+                text = project.countByState(taskState).toString(),
                 fontWeight = FontWeight.W500,
                 fontSize = 14.sp,
                 modifier = Modifier.align(Alignment.Center),

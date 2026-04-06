@@ -16,7 +16,6 @@ import kotlin.test.Test
 import woowacourse.kanban.board.domain.Author
 import woowacourse.kanban.board.domain.Task
 import woowacourse.kanban.board.domain.TaskState
-import woowacourse.kanban.board.domain.Tasks
 import woowacourse.kanban.board.ui.board.state.ProjectState
 import woowacourse.kanban.board.ui.board.state.ProjectsStateHolder
 
@@ -25,7 +24,7 @@ class BoardTest {
     val projects = listOf(
         ProjectState(
             name = "Compose1",
-            initialTasks = listOf(
+            initialTasks = mutableListOf(
                 Task(
                     title = "title",
                     taskState = TaskState.TO_DO,
@@ -42,8 +41,7 @@ class BoardTest {
         // given
         setContent {
             Board(
-                projectName = projects.first().name,
-                tasks = projects.first().tasks,
+                project = projects.first(),
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
@@ -63,8 +61,7 @@ class BoardTest {
         // given
         setContent {
             Board(
-                projectName = projects.first().name,
-                tasks = projects.first().tasks,
+                project = projects.first(),
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
@@ -88,8 +85,7 @@ class BoardTest {
             val selectedProject = stateHolder.selectedProject
 
             Board(
-                projectName = selectedProject?.name ?: "",
-                tasks = selectedProject?.tasks ?: Tasks(mutableListOf()),
+                project = selectedProject ?: projects.first(),
                 onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
@@ -111,8 +107,7 @@ class BoardTest {
         // given
         setContent {
             Board(
-                projectName = projects.first().name,
-                tasks = projects.first().tasks,
+                project = projects.first(),
                 onTaskCreated = {},
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
@@ -137,8 +132,7 @@ class BoardTest {
             val selectedProject = stateHolder.selectedProject
 
             Board(
-                projectName = selectedProject?.name ?: "",
-                tasks = selectedProject?.tasks ?: Tasks(mutableListOf()),
+                project = selectedProject ?: projects.first(),
                 onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
@@ -164,8 +158,7 @@ class BoardTest {
             val stateHolder = remember { ProjectsStateHolder(projects) }
 
             Board(
-                projectName = projects.first().name,
-                tasks = projects.first().tasks,
+                project = projects.first(),
                 onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { _, _ -> },
                 onTaskDeleted = { },
@@ -196,8 +189,7 @@ class BoardTest {
             val stateHolder = remember { ProjectsStateHolder(projects) }
 
             Board(
-                projectName = projects.first().name,
-                tasks = projects.first().tasks,
+                project = projects.first(),
                 onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { taskId, task ->
                     stateHolder.selectedProject?.updateTask(taskId, task)
@@ -226,8 +218,7 @@ class BoardTest {
             val stateHolder = remember { ProjectsStateHolder(projects) }
 
             Board(
-                projectName = projects.first().name,
-                tasks = projects.first().tasks,
+                project = projects.first(),
                 onTaskCreated = { stateHolder.selectedProject?.addTask(it) },
                 onTaskUpdated = { taskId, task ->
                     stateHolder.selectedProject?.updateTask(taskId, task)
