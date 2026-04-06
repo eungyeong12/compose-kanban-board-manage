@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.author_label
@@ -163,4 +164,16 @@ fun Author.toText(): String = when (this) {
     Author.NONE -> "없음"
     Author.DINO -> "다이노"
     Author.JAMES -> "페임스"
+}
+
+@Preview
+@Composable
+private fun TaskStateSelectFieldPreview() {
+    TaskStateSelectField(selectedState = TaskState.TO_DO, onStateChanged = {})
+}
+
+@Preview
+@Composable
+private fun AuthorSelectFieldPreview() {
+    AuthorSelectField(authors = listOf(Author.NONE, Author.DINO, Author.JAMES), selectedAuthor = Author.NONE, onAuthorSelected = {})
 }

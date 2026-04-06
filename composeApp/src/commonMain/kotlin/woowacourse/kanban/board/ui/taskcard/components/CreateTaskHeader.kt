@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import kanbanboard.composeapp.generated.resources.Res
 import kanbanboard.composeapp.generated.resources.exist_task_edit
@@ -44,4 +45,10 @@ fun CreateTaskHeader(taskInputMode: TaskInputMode, onDismissRequest: () -> Unit)
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun CreateTaskHeaderPreview() {
+    CreateTaskHeader(taskInputMode = TaskInputMode.CREATE, onDismissRequest = {})
 }
