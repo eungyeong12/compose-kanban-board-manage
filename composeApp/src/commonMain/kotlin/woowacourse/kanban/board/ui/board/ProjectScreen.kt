@@ -40,16 +40,10 @@ fun ProjectScreen(
         if (selectedProject != null) {
             Board(
                 project = selectedProject,
-                onTaskCreated = { onTaskCreated(it) },
-                onTaskUpdated = { taskId, task ->
-                    onTaskUpdated(taskId, task)
-                },
-                onTaskDeleted = { taskId ->
-                    onTaskDeleted(taskId)
-                },
-                onTaskStateChange = { taskId, targetState ->
-                    onTaskStateChange(taskId, targetState)
-                },
+                onTaskCreated = onTaskCreated,
+                onTaskUpdated = onTaskUpdated,
+                onTaskDeleted = onTaskDeleted,
+                onTaskStateChange = onTaskStateChange,
                 modifier = Modifier.size(width = 1295.dp, height = 909.dp),
             )
         }
